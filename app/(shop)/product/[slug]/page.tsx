@@ -1,6 +1,5 @@
 import { getProductBySlugAction } from '@/actions/product-by-slug.action'
-import { VariantPage } from './components/variant-page'
-import { notFound } from 'next/navigation'
+import { VariantPage } from '@/features/product/ui/variant-page'
 
 export default async function ProductPage({
 	params,
@@ -10,10 +9,6 @@ export default async function ProductPage({
 	const { slug } = await params
 
 	const product = await getProductBySlugAction(slug)
-
-	if (!product) {
-		notFound() // Это прервет выполнение и покажет страницу 404
-	}
 
 	return <VariantPage product={product} />
 }
