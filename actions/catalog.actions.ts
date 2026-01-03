@@ -1,11 +1,13 @@
 'use server'
 
 import { itemService } from '@/services/item.service'
-import { CatalogParams, catalogParamsSchema } from '@/actions/catalog.schema'
+import {
+	CatalogParams,
+	catalogParamsSchema,
+} from '@/shared/lib/zod/catalog.schema'
 
 export async function fetchCatalogProductsAction(rawParams: unknown) {
 	try {
-		// 1️⃣ Валидация входных параметров
 		const parsed = catalogParamsSchema.safeParse(rawParams)
 
 		if (!parsed.success) {
@@ -18,10 +20,8 @@ export async function fetchCatalogProductsAction(rawParams: unknown) {
 			}
 		}
 
-		// 2️⃣ Вызов сервиса с валидированными параметрами
 		const data = await itemService.search(parsed.data)
 
-		// 3️⃣ Успешный ответ
 		return {
 			success: true as const,
 			data,
@@ -39,12 +39,4 @@ export async function fetchCatalogProductsAction(rawParams: unknown) {
 export async function getAdminProductsAction(filters: CatalogParams) {
 	// Здесь в будущем можно добавить проверку прав (isAdmin)
 	return await itemService.searchForAdmin(filters)
-}
-
-export async function getProductGroupOptionsAction() {
-	return await itemService.getGroupOptions()
-}
-
-export async function getProductGroupsWithCountAction() {
-	return await itemService.getGroupsDetailed()
 }

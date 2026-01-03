@@ -1,85 +1,78 @@
-export const revalidate = 60
-
-import { ProductGrid } from '@/features/catalog/ui/product-grid'
-import { parsePage } from '@/shared/lib'
-import { Pagination } from '@/shared/ui'
+import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { fetchCatalogProductsAction } from '@/actions/catalog.actions'
-import { catalogParamsSchema } from '@/actions/catalog.schema'
 import { Suspense } from 'react'
-import { FiltersSidebar } from '@/features/filters/ui/filters-sidebar'
+import { z } from 'zod'
+
+// Shared/UI
+import { CatalogContent } from '@/features/catalog/ui'
+import { Pagination } from '@/shared/ui'
+
+// Utils/Actions
+import { fetchCatalogProductsAction } from '@/actions/catalog.actions'
+import { getProductGroupsWithCountAction } from '@/actions/groups.actions'
+import { catalogParamsSchema } from '@/shared/lib/zod/catalog.schema'
+import { GroupWithCountSchema } from '@/shared/lib/zod/groups.schema'
+import { parsePage } from '@/shared/lib'
+
+export const revalidate = 60
 
 interface Props {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
+// Применяем SRP: Метаданные отдельно
 export async function generateMetadata({
 	searchParams,
 }: Props): Promise<Metadata> {
 	const params = await searchParams
-
-	// Если params.page — массив, берем первый элемент, иначе саму строку
 	const pageValue = Array.isArray(params.page) ? params.page[0] : params.page
 	const page = parsePage(pageValue)
-
 	const baseUrl = 'https://beup.com'
-	const isFirstPage = page === 1
 
-	const canonical = isFirstPage ? `${baseUrl}/` : `${baseUrl}/?page=${page}`
+	const canonical = page <= 1 ? `${baseUrl}/` : `${baseUrl}/?page=${page}`
 
-	return {
-		alternates: {
-			canonical,
-		},
-	}
+	return { alternates: { canonical } }
 }
 
 export default async function Home({ searchParams }: Props) {
 	const rawParams = await searchParams
-
 	const validatedParams = catalogParamsSchema.parse(rawParams)
 
-	console.log(validatedParams)
-	const key = JSON.stringify(validatedParams)
-	const response = await fetchCatalogProductsAction(validatedParams)
+	const [productsResponse, groupsResponse] = await Promise.all([
+		fetchCatalogProductsAction(validatedParams),
+		getProductGroupsWithCountAction(validatedParams.gender),
+	])
 
-	if (!response.success || !response.data) {
-		return (
-			<div className='p-10 text-center text-red-500'>
-				Ошибка загрузки товаров
-			</div>
-		)
+	if (
+		!productsResponse ||
+		!productsResponse.success ||
+		!productsResponse.data
+	) {
+		return notFound()
 	}
 
-	const { data, meta } = response.data
+	const { data, meta } = productsResponse.data
+	const groupsResult = z.array(GroupWithCountSchema).safeParse(groupsResponse)
+	const groups = groupsResult.success ? groupsResult.data : []
 
 	return (
-		<div className='max-w-7xl mx-auto' key={key}>
-			<h1 className='antialiased text-4xl font-semibold my-7'>BeUp</h1>
-			<div className='flex flex-col md:flex-row gap-8'>
-				<aside className='w-full md:w-64 shrink-0'>
-					<FiltersSidebar />
-				</aside>
+		<div className='max-w-7xl mx-auto'>
+			<CatalogContent
+				data={data}
+				groups={groups}
+				currentGender={validatedParams.gender}
+			/>
 
-				{data.length > 0 ? (
-					<div>
-						<ProductGrid items={data} />
-
-						<div className='mt-10'>
-							<Suspense fallback={<div className='h-10' />}>
-								<Pagination
-									currentPage={meta.currentPage}
-									totalPages={meta.totalPages}
-								/>
-							</Suspense>
-						</div>
-					</div>
-				) : (
-					<div className='text-center py-20 text-gray-500'>
-						Товары не найдены
-					</div>
-				)}
-			</div>
+			{data.length > 0 && (
+				<div className='mt-10'>
+					<Suspense fallback={<div className='h-10' />}>
+						<Pagination
+							currentPage={meta.currentPage}
+							totalPages={meta.totalPages}
+						/>
+					</Suspense>
+				</div>
+			)}
 		</div>
 	)
 }

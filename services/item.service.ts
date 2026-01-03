@@ -1,4 +1,4 @@
-import { CatalogParams } from '@/actions/catalog/catalog.schema'
+import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
 import { buildPagination } from '@/domain/catalog/pagination'
 import { PaginatedResponse } from '@/domain/common/paginated-response'
 import {
@@ -7,6 +7,7 @@ import {
 	ProductWithVariants,
 } from '@/domain/product/types'
 import { itemRepository } from '@/repositories/item.repository'
+import { GenderDTO } from '@/shared/lib/zod/gender.schema'
 
 export const itemService = {
 	async search(
@@ -77,7 +78,7 @@ export const itemService = {
 			groups: await itemRepository.getGroupOptions(),
 		}
 	},
-	async getGroupsDetailed() {
-		return await itemRepository.getGroupsWithCount()
+	async getGroupsDetailed(gender: GenderDTO) {
+		return await itemRepository.getGroupsWithCount(gender)
 	},
 }

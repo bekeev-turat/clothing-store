@@ -5,24 +5,31 @@ export const ROUTE_MAP = {
 	profile: '/profile',
 
 	search: '/search',
-	
+
+	catalog: {
+		male: '/?gender=male',
+		female: '/?gender=female',
+		child: '/?gender=child',
+		unisex: '/?gender=unisex',
+		detail: (slug: string) => `/?groupSlug=${slug}`,
+	},
 	auth: {
 		login: '/auth/login',
 		register: '/auth/register',
 		resetName: 'auth/reset-name',
 		resetPassword: 'auth/reset-password',
 	},
-	
+
 	orders: {
 		root: '/orders',
 		detail: (id: string | number) => `/orders/${id}`,
 	},
-	
+
 	product: {
 		root: '/product',
 		detail: (id: string) => `/product/${id}`,
 	},
-	
+
 	admin: {
 		root: '/admin',
 		groups: '/admin/groups',
@@ -32,9 +39,8 @@ export const ROUTE_MAP = {
 	},
 } as const
 
-
-	// category: {
-	// 	men: '/category/men',
-	// 	women: '/category/women',
-	// 	kids: '/category/kids',
-	// },
+// category: {
+// 	men: '/category/men',
+// 	women: '/category/women',
+// 	kids: '/category/kids',
+// },
