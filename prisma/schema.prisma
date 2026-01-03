@@ -7,6 +7,14 @@ datasource db {
   provider = "postgresql"
 }
 
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
 // ✅ Переписанные enum-ы
 enum ItemSize {
   XS
@@ -28,47 +36,127 @@ enum ItemGender {
 enum UserRole {
   ADMIN
   MEMBER
+  MODERATOR
 }
 
 // ✅ Новые модели
 model Group {
-  id    String @id @default(uuid())
-  title String @unique
+  id     String      @id @default(uuid())
+  title  String
+  slug   String      @unique
+  gender ItemGender?
+
   items Item[]
 
-  @@map("groups") // Таблица будет называться groups
+  @@map("groups")
 }
 
 model Item {
-  id             String     @id @default(uuid())
-  name           String
-  description    String
-  stock          Int
-  price          Float      @default(0)
-  availableSizes ItemSize[] @default([])
-  slug           String     @unique
-  tags           String[]   @default([])
-  gender         ItemGender
+  id          String     @id @default(uuid())
+  name        String
+  description String
+  brand       String
+  slug        String     @unique
+  price       Float      @default(0)
+  gender      ItemGender
+  tags        String[]   @default([])
+  hasZipper   Boolean    @default(false)
 
-  // Связь с группой
+  // данные, одинаковые для всех цветов
+  composition  String[]  @default([])
+  code         String?
+  modelHeight  Int?
+  modelSize    ItemSize?
+  measurements String
+
   groupId String
   group   Group  @relation(fields: [groupId], references: [id])
 
-  images ItemImage[]
+  variants ItemVariant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([brand])
   @@index([gender])
+  @@index([groupId])
+}
+
+model Look {
+  id       String        @id @default(uuid())
+  name     String?
+  // Список вариантов товаров, которые входят в этот образ
+  variants ItemVariant[]
+
+  createdAt DateTime @default(now())
 }
 
 model ItemImage {
-  id     Int    @id @default(autoincrement())
-  url    String
-  itemId String
-  item   Item   @relation(fields: [itemId], references: [id])
+  id  Int    @id @default(autoincrement())
+  url String
+
+  variantId String
+  variant   ItemVariant @relation(fields: [variantId], references: [id])
 
   @@map("item_images")
+}
+
+model ItemVariant {
+  id             String      @id @default(uuid())
+  color          String
+  images         ItemImage[]
+  availableSizes ItemSize[]  @default([])
+  stock          Stock[]
+  itemId         String
+  item           Item        @relation(fields: [itemId], references: [id])
+  orderItems     OrderItem[]
+  look           Look?       @relation(fields: [lookId], references: [id])
+  lookId         String?
+
+  @@map("item_variants")
+}
+
+model Stock {
+  id        String      @id @default(uuid())
+  size      ItemSize
+  quantity  Int         @default(0)
+  variantId String
+  variant   ItemVariant @relation(fields: [variantId], references: [id])
+
+  @@unique([variantId, size]) // Гарантирует одну запись на размер в варианте
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+
+  // Связь с пользователем
+  userId String
+  user   Account @relation(fields: [userId], references: [id])
+
+  // Состав заказа
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id       String   @id @default(uuid())
+  quantity Int
+  price    Float // Цена на момент покупки
+  size     ItemSize
+  orderId  String
+  order    Order    @relation(fields: [orderId], references: [id])
+
+  variantId String
+  variant   ItemVariant @relation(fields: [variantId], references: [id])
+
+  @@map("order_items")
 }
 
 model Account {
@@ -82,6 +170,7 @@ model Account {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  orders    Order[]
 
   @@map("accounts")
 }

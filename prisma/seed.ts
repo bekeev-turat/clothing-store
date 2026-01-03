@@ -1,6 +1,8 @@
-import { Item } from '@prisma/client'
-import { PrismaClient } from './generated/client'
+import { ItemSize, PrismaClient } from './generated/client'
 import { PrismaPg } from '@prisma/adapter-pg'
+import { ItemGender } from './generated/client'
+import { itemsFemaleData } from './seed-item-data'
+import { groups, groupsData } from './seed-group-data'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
@@ -11,73 +13,52 @@ async function main() {
 	// ------------------------------
 	// 1) Groups
 	// ------------------------------
-	await prisma.group.createMany({
-		data: [
-			{ title: 'Футболки' },
-			{ title: 'Худи' },
-			{ title: 'Штаны' },
-			{ title: 'Аксессуары' },
-		],
-		skipDuplicates: true,
-	})
-
-	const groupTshirts = await prisma.group.findFirst({
-		where: { title: 'Футболки' },
-	})
-	const groupHoodies = await prisma.group.findFirst({
-		where: { title: 'Худи' },
-	})
+	for (const group of groupsData) {
+		const upserted = await prisma.group.upsert({
+			where: { slug: group.slug },
+			update: {},
+			create: group,
+		})
+		groups[group.slug] = upserted
+	}
+	console.log('🌱 Starting seed...')
 
 	// ------------------------------
 	// 2) Items
 	// ------------------------------
-	const itemsData: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>[] = [
-		{
-			name: 'Футболка Classic',
-			description: 'Качественная хлопковая футболка.',
-			stock: 50,
-			price: 19.99,
-			availableSizes: ['S', 'M', 'L', 'XL'],
-			slug: 'tshirt-classic',
-			tags: ['new', 'popular'],
-			gender: 'unisex',
-			groupId: groupTshirts!.id,
-		},
-		{
-			name: 'Худи Street',
-			description: 'Тёплое худи оверсайз.',
-			stock: 30,
-			price: 39.99,
-			availableSizes: ['M', 'L', 'XL', 'XXL'],
-			slug: 'hoodie-street',
-			tags: ['warm', 'top'],
-			gender: 'male',
-			groupId: groupHoodies!.id,
-		},
-	]
 
-	const items = []
-	for (const item of itemsData) {
-		const created = await prisma.item.create({ data: item })
-		items.push(created)
+	for (const item of itemsFemaleData) {
+		const { variants, groupSlug, ...itemBase } = item
+
+		await prisma.item.upsert({
+			where: { slug: itemBase.slug },
+			update: {},
+			create: {
+				...itemBase,
+				gender: itemBase.gender as ItemGender,
+				group: { connect: { slug: groupSlug } },
+				modelSize: itemBase.modelSize as ItemSize,
+				variants: {
+					create: variants.map((v) => ({
+						color: v.color,
+						availableSizes: v.availableSizes as ItemSize[],
+						images: {
+							create: v.images.map((img) => ({ url: img })),
+						},
+						stock: {
+							create: v.stock.map((s) => ({
+								size: s.size as ItemSize,
+								quantity: s.quantity,
+							})),
+						},
+					})),
+				},
+			},
+		})
 	}
 
 	// ------------------------------
-	// 3) Item images
-	// ------------------------------
-	await prisma.itemImage.createMany({
-		data: [
-			{ url: '/images/tshirt1.png', itemId: items[0].id },
-			{ url: '/images/tshirt2.png', itemId: items[0].id },
-
-			{ url: '/images/hoodie1.png', itemId: items[1].id },
-			{ url: '/images/hoodie2.png', itemId: items[1].id },
-		],
-	})
-
-	// ------------------------------
-	// 4) Accounts
-	// NOTE: passwordHash должен быть уже хэшем!
+	// 3) Accounts
 	// ------------------------------
 	await prisma.account.createMany({
 		data: [
