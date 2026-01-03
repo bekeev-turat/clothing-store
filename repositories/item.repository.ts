@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { CatalogParams } from '@/actions/catalog/catalog.schema'
+import { CatalogParams } from '@/actions/catalog.schema'
 import {
 	CatalogItem,
 	ProductListItem,

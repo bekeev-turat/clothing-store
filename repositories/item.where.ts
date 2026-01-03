@@ -1,5 +1,5 @@
-import { CatalogParams } from "@/actions/catalog/catalog.schema"
-import { Prisma } from "@/prisma/generated/client"
+import { CatalogParams } from '@/actions/catalog.schema'
+import { Prisma } from '@/prisma/generated/client'
 
 export function buildItemWhere(filters: CatalogParams): Prisma.ItemWhereInput {
 	const {
