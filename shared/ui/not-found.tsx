@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import Lottie from 'lottie-react'
 import animationData from '@/public/animations/404-error-page-with-cat.json'

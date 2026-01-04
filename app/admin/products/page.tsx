@@ -1,5 +1,5 @@
 import { getAdminProductsAction } from '@/actions/catalog.actions'
-import { getProductGroupOptionsAction } from '@/actions/groups.actions'
+import { getProductGroupsWithCountAction } from '@/actions/groups.actions'
 import {
 	ProductsHeader,
 	ProductsTable,
@@ -18,14 +18,14 @@ export default async function AdminProductsPage({
 }) {
 	const params = await searchParams
 
-	const [{ data, meta }, { groups }] = await Promise.all([
+	const [{ data, meta }, groups] = await Promise.all([
 		getAdminProductsAction({
 			search: params.query,
 			groupSlug: params.groupSlug,
 			pageIndex: Number(params.pageIndex) || 0,
 			pageSize: 20,
 		}),
-		getProductGroupOptionsAction(),
+		getProductGroupsWithCountAction(),
 	])
 
 	return (

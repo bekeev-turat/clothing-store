@@ -1,5 +1,3 @@
-import { groups } from './seed-group-data'
-
 export const itemsFemaleData = [
 	{
 		name: 'Sporty&Rich Хлопковые брюки',
@@ -80,7 +78,7 @@ export const itemsFemaleData = [
 		],
 	},
 	{
-		name: 'Sporty&Rich Хлопковые брюки',
+		name: 'Sporty&Rich Хлопковые худи',
 		description:
 			'Худи Crown Tennis со спущенной линией плеч выполнили из хлопкового трикотажа. Модель с карманом «кенгуру» украсили вышитыми эмблемой и логотипом.',
 		brand: 'Sporty&Rich',
@@ -96,7 +94,7 @@ export const itemsFemaleData = [
 		// Используем специфичные для брюк ключи
 		measurements:
 			'Обхват талии 77 см, длина внутреннего шагового шва 75 см, длина по внешнему шву 103 см.',
-		groupSlug: 'trousers-female',
+		groupSlug: 'hoodie-malex',
 
 		variants: [
 			{

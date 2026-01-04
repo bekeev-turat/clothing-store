@@ -1,4 +1,5 @@
 import { ItemSize, Prisma } from '@/prisma/generated/client'
+import { itemRepository } from '@/repositories/item.repository'
 import {
 	CATALOG_ITEM_SELECT,
 	PRODUCT_ITEM_SELECT,

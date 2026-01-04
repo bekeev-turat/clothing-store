@@ -38,11 +38,15 @@ export function FiltersSidebar({ groups }: { groups: GroupWithCountDTO[] }) {
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value='all'>Все</SelectItem>
-						{groups.map((g) => (
-							<SelectItem key={g.id} value={g.slug}>
-								{g.title}
-							</SelectItem>
-						))}
+						{groups.map((g) => {
+							if (g._count.items) {
+								return (
+									<SelectItem key={g.id} value={g.slug}>
+										{g.title}
+									</SelectItem>
+								)
+							}
+						})}
 					</SelectContent>
 				</Select>
 			</div>

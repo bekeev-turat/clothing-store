@@ -7,7 +7,6 @@ import {
 	ProductWithVariants,
 } from '@/domain/product/types'
 import { itemRepository } from '@/repositories/item.repository'
-import { GenderDTO } from '@/shared/lib/zod/gender.schema'
 
 export const itemService = {
 	async search(
@@ -71,14 +70,5 @@ export const itemService = {
 
 		if (!item) return null
 		return item
-	},
-
-	async getGroupOptions() {
-		return {
-			groups: await itemRepository.getGroupOptions(),
-		}
-	},
-	async getGroupsDetailed(gender: GenderDTO) {
-		return await itemRepository.getGroupsWithCount(gender)
 	},
 }

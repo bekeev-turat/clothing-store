@@ -1,10 +1,10 @@
-import { CatalogParams } from '@/actions/catalog.schema'
+import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
 import { Prisma } from '@/prisma/generated/client'
 
 export function buildItemWhere(filters: CatalogParams): Prisma.ItemWhereInput {
 	const {
 		gender,
-		groupId,
+		groupSlug,
 		minPrice,
 		maxPrice,
 		sizes,
@@ -19,8 +19,10 @@ export function buildItemWhere(filters: CatalogParams): Prisma.ItemWhereInput {
 		where.gender = gender
 	}
 
-	if (groupId) {
-		where.groupId = groupId
+	if (groupSlug) {
+		where.group = {
+			slug: groupSlug,
+		}
 	}
 
 	if (search) {

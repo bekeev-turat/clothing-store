@@ -4,6 +4,17 @@ import { OrderStatus, Prisma } from '@/prisma/generated/client'
 type TxClient = Prisma.TransactionClient | typeof prisma
 
 export const OrderRepository = {
+	async getAll() {
+		return await prisma.order.findMany({
+			include: {
+				user: true,
+				items: {
+					include: { variant: { include: { item: true } } },
+				},
+			},
+			orderBy: { createdAt: 'desc' },
+		})
+	},
 	async create(data: Prisma.OrderCreateInput, tx?: TxClient) {
 		const client = tx || prisma
 		return client.order.create({

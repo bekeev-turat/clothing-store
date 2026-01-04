@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { CatalogParams } from '@/actions/catalog.schema'
+import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
 import {
 	CatalogItem,
 	ProductListItem,
@@ -73,23 +73,6 @@ export const itemRepository = {
 	async count(filters: CatalogParams): Promise<number> {
 		return prisma.item.count({
 			where: buildItemWhere(filters),
-		})
-	},
-
-	async getGroupOptions() {
-		return prisma.group.findMany({
-			select: { id: true, title: true },
-			orderBy: { title: 'asc' },
-		})
-	},
-	async getGroupsWithCount() {
-		return await prisma.group.findMany({
-			include: {
-				_count: {
-					select: { items: true },
-				},
-			},
-			orderBy: { title: 'asc' },
 		})
 	},
 }

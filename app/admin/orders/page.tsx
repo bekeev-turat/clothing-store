@@ -1,5 +1,5 @@
 import { OrdersTable, OrdersHeader } from '@/features/admin/order/ui'
-import { orderService } from '@/services/admin/orders.services'
+import { orderService } from '@/services/order.service'
 
 export default async function AdminOrdersPage() {
 	const orders = await orderService.getOrdersList()
