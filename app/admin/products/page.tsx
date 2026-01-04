@@ -1,7 +1,5 @@
-import {
-	getAdminProductsAction,
-	getProductGroupOptionsAction,
-} from '@/actions/catalog.actions'
+import { getAdminProductsAction } from '@/actions/catalog.actions'
+import { getProductGroupOptionsAction } from '@/actions/groups.actions'
 import {
 	ProductsHeader,
 	ProductsTable,
@@ -14,7 +12,7 @@ export default async function AdminProductsPage({
 }: {
 	searchParams: Promise<{
 		query?: string
-		groupId?: string
+		groupSlug?: string
 		pageIndex?: string
 	}>
 }) {
@@ -23,9 +21,9 @@ export default async function AdminProductsPage({
 	const [{ data, meta }, { groups }] = await Promise.all([
 		getAdminProductsAction({
 			search: params.query,
-			groupId: params.groupId,
+			groupSlug: params.groupSlug,
 			pageIndex: Number(params.pageIndex) || 0,
-			pageSize: 50,
+			pageSize: 20,
 		}),
 		getProductGroupOptionsAction(),
 	])

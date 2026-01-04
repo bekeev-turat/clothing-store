@@ -1,8 +1,8 @@
 'use client'
 
-import { ItemGender } from '@/prisma/generated/enums'
 import { ROUTE_MAP } from '@/shared/config/routes'
 import { useUpdateParams } from '@/shared/hooks'
+import { GroupWithCountDTO } from '@/shared/lib/zod/groups.schema'
 import {
 	Label,
 	Button,
@@ -16,7 +16,7 @@ import {
 } from '@/shared/ui'
 import { X } from 'lucide-react'
 
-export function FiltersSidebar() {
+export function FiltersSidebar({ groups }: { groups: GroupWithCountDTO[] }) {
 	const { updateParam, searchParams } = useUpdateParams()
 
 	const handleReset = () => {
@@ -25,23 +25,22 @@ export function FiltersSidebar() {
 
 	return (
 		<div className='space-y-8 sticky top-4 p-1'>
-			{/* Фильтр по полу */}
 			<div className='space-y-3'>
-				<Label className='text-base font-bold'>Пол</Label>
+				<Label className='text-base font-bold'>Категория</Label>
 				<Select
-					value={searchParams.get('gender') || 'all'}
+					value={searchParams.get('groupSlug') || 'all'}
 					onValueChange={(val) =>
-						updateParam('gender', val === 'all' ? '' : val)
+						updateParam('groupSlug', val === 'all' ? '' : val)
 					}
 				>
 					<SelectTrigger className='w-full'>
-						<SelectValue placeholder='Выберите пол' />
+						<SelectValue placeholder='Вид одежды' />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value='all'>Все</SelectItem>
-						{Object.values(ItemGender).map((g) => (
-							<SelectItem key={g} value={g}>
-								{g}
+						{groups.map((g) => (
+							<SelectItem key={g.id} value={g.slug}>
+								{g.title}
 							</SelectItem>
 						))}
 					</SelectContent>

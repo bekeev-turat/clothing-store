@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { SearchToolbar } from '@/shared/ui'
+import { GENDER_OPTIONS } from '@/shared/const/gender'
 
 interface SearchHeaderProps {
 	searchValue: string
@@ -9,12 +10,9 @@ interface SearchHeaderProps {
 	isLoading: boolean
 }
 
-// Константы вынесены за пределы компонента (соблюдение OCP)
-const GENDER_OPTIONS = [
+const GENDER_OPTIONS_WITH_ALL = [
 	{ value: 'all', label: 'Все категории' },
-	{ value: 'male', label: 'Мужское' },
-	{ value: 'female', label: 'Женское' },
-	{ value: 'child', label: 'Детское' },
+	...GENDER_OPTIONS,
 ]
 
 export function SearchHeader({
@@ -38,7 +36,7 @@ export function SearchHeader({
 					filterValue={gender}
 					onFilterChange={onGenderChange}
 					isLoading={isLoading}
-					filterOptions={GENDER_OPTIONS}
+					filterOptions={GENDER_OPTIONS_WITH_ALL}
 				/>
 			</div>
 		</div>

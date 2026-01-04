@@ -18,8 +18,8 @@ export function SearchResults({ results = [], isLoading }: SearchResultsProps) {
 			)}
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
-				{results.map((item, index) => (
-					<ProductSearchCard key={item.id} item={item} index={index} />
+				{results.map((item) => (
+					<ProductSearchCard key={item.id} item={item} />
 				))}
 			</div>
 

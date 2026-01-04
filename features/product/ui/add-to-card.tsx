@@ -14,7 +14,7 @@ interface Props {
 	product: ProductWithVariants
 	selectedVariantId: string
 	selectedSize: ItemSize | undefined
-	// Добавляем колбэк для сброса после добавления, если нужно
+	variantIndex: number
 	onSuccess?: () => void
 }
 
@@ -22,6 +22,7 @@ const AddToCard = ({
 	product,
 	selectedSize,
 	selectedVariantId,
+	variantIndex,
 	onSuccess,
 }: Props) => {
 	const dispatch = useAppDispatch()
@@ -42,7 +43,7 @@ const AddToCard = ({
 				price: product.price,
 				quantity,
 				size: selectedSize,
-				image: product.variants[0].images[0]?.url || '',
+				image: product.variants[variantIndex].images[0]?.url || '',
 			}),
 		)
 

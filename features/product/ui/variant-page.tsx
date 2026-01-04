@@ -32,7 +32,7 @@ export const VariantPage = ({ product }: { product: ProductWithVariants }) => {
 		setSelectedSize(undefined)
 	}
 	return (
-		<div className='mt-6 mb-20 grid gap-6 lg:grid-cols-3'>
+		<div className='mt-6 mb-20 grid gap-6 lg:grid-cols-3 max-w-7xl mx-auto'>
 			<div className='md:col-span-2'>
 				<ProductGallery
 					title={product.name}
@@ -57,6 +57,7 @@ export const VariantPage = ({ product }: { product: ProductWithVariants }) => {
 
 				<AddToCard
 					product={product}
+					variantIndex={variantIndex}
 					selectedVariantId={currentVariant.id}
 					selectedSize={selectedSize}
 					onSuccess={() => setSelectedSize(undefined)}

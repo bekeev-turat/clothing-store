@@ -1,4 +1,4 @@
-import { Size } from '@/shared/interfaces'
+import { Size } from "@/shared/types"
 
 export interface CartItem {
 	id: string
