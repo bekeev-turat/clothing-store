@@ -1,11 +1,27 @@
 import { Size } from '@/shared/types'
 
-export interface CartProduct {
+export interface ICartItem {
 	id: string
-	slug: string
 	title: string
 	price: number
 	quantity: number
-	size: Size
 	image: string
+	slug: string
+	size: Size
+}
+
+export interface IOrderAddress {
+	firstName?: string
+	lastName?: string
+	address?: string
+	address2?: string
+	city?: string
+	zip?: string
+	phone?: string
+}
+
+export interface IOrderTotals {
+	subTotal: number
+	tax: number
+	total: number
 }

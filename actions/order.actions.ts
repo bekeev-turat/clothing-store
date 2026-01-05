@@ -5,7 +5,6 @@ import { CreateOrderSchema } from './order.schema'
 import { ROUTE_MAP } from '@/shared/config/routes'
 import { orderService } from '@/services/order.service'
 import { OrderStatus } from '@/prisma/generated/enums'
-import { OrderRepository } from '@/repositories/order.repository'
 import { getSessionOrThrow } from '@/shared/lib/auth-utils'
 
 export async function createOrderAction(rawData: unknown) {
@@ -76,7 +75,7 @@ export async function getOrdersByUserAction() {
 	try {
 		const session = await getSessionOrThrow()
 
-		const orders = await OrderRepository.findByUserId(session.user.id)
+		const orders = await orderService.getOrderById(session.user.id)
 		return { success: true, data: orders }
 	} catch (e) {
 		return { success: false, message: 'Не удалось загрузить заказы' }

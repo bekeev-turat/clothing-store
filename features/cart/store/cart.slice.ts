@@ -1,21 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { CartItem } from './cart.types'
+import { ICartItem, IOrderAddress } from '../model/cart.types'
 
 interface CartState {
-	items: CartItem[]
+	items: ICartItem[]
 	totalItems: number
+	address: IOrderAddress | null // Добавляем это
 }
 
 const initialState: CartState = {
 	items: [],
 	totalItems: 0,
+	address: null, // Изначально адреса нет
 }
 
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		setCart(state, action: PayloadAction<CartItem[]>) {
+		setCart(state, action: PayloadAction<ICartItem[]>) {
 			state.items = action.payload
 			// Обновляем счетчик
 			state.totalItems = state.items.reduce(
@@ -24,7 +26,7 @@ const cartSlice = createSlice({
 			)
 		},
 
-		addItem(state, action: PayloadAction<CartItem>) {
+		addItem(state, action: PayloadAction<ICartItem>) {
 			const existing = state.items.find(
 				(item) =>
 					item.id === action.payload.id && item.size === action.payload.size,
@@ -65,18 +67,28 @@ const cartSlice = createSlice({
 				(item) =>
 					!(item.id === action.payload.id && item.size === action.payload.size),
 			)
-			// Обновляем счетчик после удаления
 			state.totalItems = state.items.reduce(
 				(sum, item) => sum + item.quantity,
 				0,
 			)
 		},
-
-		clearCart: () => initialState, // Самый простой способ сброса
+		saveAddress(state, action: PayloadAction<IOrderAddress>) {
+			state.address = action.payload
+		},
+		clearCart: (state) => {
+			state.items = []
+			state.totalItems = 0
+		},
 	},
 })
 
-export const { setCart, addItem, updateItemQuantity, removeItem, clearCart } =
-	cartSlice.actions
+export const {
+	saveAddress,
+	setCart,
+	addItem,
+	updateItemQuantity,
+	removeItem,
+	clearCart,
+} = cartSlice.actions
 
 export const cartReducer = cartSlice.reducer

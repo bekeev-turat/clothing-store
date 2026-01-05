@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { QuantityControl } from '@/shared/ui/cart/quantity-control'
-import { CartItem } from '../store/cart.types'
+import { ICartItem } from '../model/cart.types'
 
 interface Props {
-	items: CartItem[] // Опишите ваш интерфейс CartItem
+	items: ICartItem[]
 	onUpdateQuantity: (id: string, size: string, q: number) => void
 	onRemove: (id: string, size: string) => void
 }

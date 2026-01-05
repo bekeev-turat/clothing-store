@@ -1,5 +1,8 @@
 import { useTransition } from 'react'
 import { currencyFormat } from '@/shared/utils/currencyFormat'
+import Link from 'next/link'
+import { ROUTE_MAP } from '@/shared/config/routes'
+import { cn } from '@/shared/lib'
 
 interface Props {
 	totalItems: number
@@ -38,13 +41,18 @@ export const CartTotalsList = ({
 				</span>
 			</div>
 
-			<button
-				onClick={handleAction}
-				disabled={isPending || totalItems === 0}
-				className='w-full bg-black text-white py-4 rounded-lg font-bold disabled:bg-gray-400'
+			<Link
+				href={ROUTE_MAP.cart.checkout}
+				className={cn(
+					'w-full bg-black text-white py-4 rounded-lg font-bold flex justify-center items-center',
+					(isPending || totalItems === 0) && 'bg-gray-400 pointer-events-none',
+				)}
+				// Чтобы нельзя было перейти через Tab на клавиатуре
+				tabIndex={isPending || totalItems === 0 ? -1 : undefined}
+				aria-disabled={isPending || totalItems === 0}
 			>
 				{isPending ? 'Оформление...' : 'Оформить заказ'}
-			</button>
+			</Link>
 		</div>
 	)
 }
