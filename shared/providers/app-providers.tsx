@@ -14,7 +14,7 @@ export const AppProviders = ({ children }: Props) => {
 			<SessionProvider>
 				<StoreReduxProvider store={store}>{children}</StoreReduxProvider>
 			</SessionProvider>
-			{/* <Toaster /> */}
+			<Toaster position='top-center' reverseOrder={false} />
 		</>
 	)
 }

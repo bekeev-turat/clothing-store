@@ -77,7 +77,6 @@ export const VariantPage = ({ product }: { product: ProductWithVariants }) => {
 	)
 }
 
-// Вспомогательный мини-компонент внутри файла
 const ProductHeader = ({ name, price }: { name: string; price: number }) => (
 	<div>
 		<h1 className='text-lg font-semibold'>{name}</h1>

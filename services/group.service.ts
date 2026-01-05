@@ -1,5 +1,6 @@
 import { groupRepository } from '@/repositories/group/group.repository'
 import { GenderDTO } from '@/shared/lib/zod/gender.schema'
+import { Prisma } from '@prisma/client'
 
 export const groupService = {
 	async getOptions() {
@@ -16,3 +17,9 @@ export const groupService = {
 		return groups
 	},
 }
+
+export type IDetailedGroups = Prisma.PromiseReturnType<
+	typeof groupService.getDetailedGroups
+>
+
+export type IDetailedGroupsItem = IDetailedGroups[number]

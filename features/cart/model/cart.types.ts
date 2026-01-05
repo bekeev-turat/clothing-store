@@ -24,4 +24,5 @@ export interface IOrderTotals {
 	subTotal: number
 	tax: number
 	total: number
+	totalItems: number
 }

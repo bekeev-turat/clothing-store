@@ -5,45 +5,25 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 import { useAppSelector } from '@/shared/store/hooks'
-import {
-	selectSubtotal,
-	selectTax,
-	selectTotalPrice,
-	selectTotalItems,
-} from '@/features/cart/store/cart.selectors'
 
 import { CartItemsList } from '@/features/cart/ui/cart-items-list'
-import { CartTotalsList } from '@/features/cart/ui/cart-totals-card'
 import { useCartActions } from '@/features/cart/hooks/use-cart-actions'
+import { SummaryCard } from '@/features/checkout/ui'
+import { ROUTE_MAP } from '@/shared/config/routes'
+import { cn } from '@/shared/lib'
+import { useCheckout } from '@/features/checkout/hooks/use-checkout'
 
 const CartPage = () => {
 	const router = useRouter()
 	const items = useAppSelector((state) => state.cart.items)
-	const { handleUpdateQuantity, handleRemove, handleCreateOrder } =
-		useCartActions()
-
-	const totals = {
-		totalItems: useAppSelector(selectTotalItems),
-		subTotal: useAppSelector(selectSubtotal),
-		tax: useAppSelector(selectTax),
-		total: useAppSelector(selectTotalPrice),
-	}
+	const { handleUpdateQuantity, handleRemove } = useCartActions()
+	const { totals } = useCheckout()
 
 	useEffect(() => {
 		if (items.length === 0) {
 			router.push('/empty')
 		}
 	}, [items.length, router])
-
-	const onCheckout = async () => {
-		const result = await handleCreateOrder()
-		if (result?.success) {
-			alert('Заказ создан!')
-			router.push('/orders/success')
-		} else if (result?.message) {
-			alert(result.message)
-		}
-	}
 
 	if (items.length === 0) return null
 
@@ -64,8 +44,20 @@ const CartPage = () => {
 						← Продолжить покупки
 					</Link>
 				</div>
-
-				<CartTotalsList {...totals} onCheckout={onCheckout} />
+				<SummaryCard
+					totals={totals}
+					actionButton={
+						<Link
+							href={ROUTE_MAP.cart.checkout}
+							className={cn(
+								'w-full bg-black text-white py-4 px-2 rounded-lg font-bold text-center',
+								totals.totalItems === 0 && 'opacity-50 pointer-events-none',
+							)}
+						>
+							Перейти к оформлению
+						</Link>
+					}
+				/>
 			</div>
 		</section>
 	)

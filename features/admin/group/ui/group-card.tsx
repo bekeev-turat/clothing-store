@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { FolderTree, Pencil, Hash, UserCircle } from 'lucide-react'
 import { ItemGender } from '@/prisma/generated/enums'
 import { ROUTE_MAP } from '@/shared/config/routes'
-import { GroupListItem } from '@/services/admin/group.service'
+import { type IDetailedGroupsItem } from '@/services/group.service'
 
 const genderLabels: Record<ItemGender, string> = {
 	[ItemGender.male]: 'Мужское',
@@ -13,7 +13,7 @@ const genderLabels: Record<ItemGender, string> = {
 	[ItemGender.unisex]: 'Унисекс',
 }
 
-export const GroupCard = ({ group }: { group: GroupListItem }) => {
+export const GroupCard = ({ group }: { group: IDetailedGroupsItem }) => {
 	return (
 		<div className='bg-white p-6 rounded-xl border shadow-sm hover:shadow-md transition'>
 			<div className='flex justify-between items-start mb-4'>

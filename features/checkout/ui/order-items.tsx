@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle, Button } from '@/shared/ui'
 import { Package } from 'lucide-react'
 import Link from 'next/link'
 import { ROUTE_MAP } from '@/shared/config/routes'
-import { ICartItem } from '../model/cart.types'
+import { ICartItem } from '@/features/cart/model/cart.types'
+import { currencyFormat } from '@/shared/utils/currencyFormat'
 
 export const OrderItems = ({ items }: { items: ICartItem[] }) => (
 	<Card>
@@ -33,7 +34,7 @@ export const OrderItems = ({ items }: { items: ICartItem[] }) => (
 						</p>
 					</div>
 					<p className='font-semibold'>
-						${(item.price * item.quantity).toFixed(2)}
+						{currencyFormat(item.price * item.quantity)}
 					</p>
 				</div>
 			))}

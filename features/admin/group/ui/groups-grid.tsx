@@ -1,7 +1,7 @@
+import { IDetailedGroups } from '@/services/group.service'
 import { GroupCard } from './group-card'
-import { GroupsListResponse } from '@/services/admin/group.service'
 
-export const GroupsGrid = ({ groups }: { groups: GroupsListResponse }) => (
+export const GroupsGrid = ({ groups }: { groups: IDetailedGroups }) => (
 	<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 		{groups.map((group) => (
 			<GroupCard key={group.id} group={group} />

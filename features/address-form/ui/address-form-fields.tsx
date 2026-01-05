@@ -2,7 +2,7 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { User, Home, Phone } from 'lucide-react'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
-import { IOrderAddress } from '../model/cart.types'
+import { IOrderAddress } from '../../cart/model/cart.types'
 
 interface Props {
 	register: UseFormRegister<IOrderAddress>

@@ -9,6 +9,7 @@ import { QuantityControl } from '@/shared/ui/cart/quantity-control'
 
 import { useAppDispatch } from '@/shared/store/hooks'
 import { addItem } from '@/features/cart/store/cart.slice'
+import toast from 'react-hot-toast'
 
 interface Props {
 	product: ProductWithVariants
@@ -46,6 +47,8 @@ const AddToCard = ({
 				image: product.variants[variantIndex].images[0]?.url || '',
 			}),
 		)
+
+		toast.success('Товар добавлен в корзину!')
 
 		setQuantity(1)
 		setPosted(false)
