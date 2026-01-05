@@ -1,6 +1,10 @@
 export const ROUTE_MAP = {
 	home: '/',
-	cart: '/cart',
+	cart: {
+		root: '/cart',
+		checkout: '/checkout',
+		address: '/checkout/address',
+	},
 	favorites: '/favorites',
 	profile: '/profile',
 

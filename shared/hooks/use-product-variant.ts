@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { ProductWithVariants } from '@/domain/product/types'
 import { ItemSize } from '@/prisma/generated/enums'
