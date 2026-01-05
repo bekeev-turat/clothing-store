@@ -1,11 +1,9 @@
-import { AccountRepository } from '@/repositories/account/account.repository'
+import { AccountRepository } from '@/repositories/account.repository'
 import bcrypt from 'bcryptjs'
 
-export class AuthService {
-	private readonly users = new AccountRepository()
-
+export const AuthService = {
 	async register(data: { email: string; username: string; password: string }) {
-		const exists = await this.users.findByEmail(data.email)
+		const exists = await AccountRepository.findByEmail(data.email)
 
 		if (exists) {
 			throw new Error('Пользователь с таким email уже существует')
@@ -13,7 +11,7 @@ export class AuthService {
 
 		const passwordHash = await bcrypt.hash(data.password, 10)
 
-		const user = await this.users.create({
+		const user = await AccountRepository.create({
 			email: data.email,
 			username: data.username,
 			passwordHash,
@@ -23,10 +21,10 @@ export class AuthService {
 			id: user.id,
 			email: user.email,
 		}
-	}
+	},
 
 	async validateUser(email: string, password: string) {
-		const user = await this.users.findByEmail(email)
+		const user = await AccountRepository.findByEmail(email)
 
 		if (!user) return null
 
@@ -35,5 +33,5 @@ export class AuthService {
 		if (!isValid) return null
 
 		return user
-	}
+	},
 }

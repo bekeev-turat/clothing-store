@@ -50,7 +50,7 @@ export const Navbar = ({ groups }: NavbarProps) => {
 				</Link>
 
 				<Link
-					href={ROUTE_MAP.cart}
+					href={ROUTE_MAP.cart.root}
 					className={`${navLinkClass} ${underlineClass} flex items-center gap-2`}
 				>
 					<FaShoppingBasket className='text-xl group-hover:-translate-y-1 transition-transform' />

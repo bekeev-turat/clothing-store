@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import { CartItem } from '@/features/cart/store/cart.types'
 import { currencyFormat } from '@/shared/utils/currencyFormat'
+import { ICartItem } from '@/features/cart/model/cart.types'
 
-export const OrderItemsList = ({ items }: { items: CartItem[] }) => {
+export const OrderItemsList = ({ items }: { items: ICartItem[] }) => {
 	return (
 		<div className='space-y-4'>
 			{items.map((item) => (

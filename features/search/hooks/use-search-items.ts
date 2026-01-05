@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { searchItemsAction } from '@/actions/get-items-search'

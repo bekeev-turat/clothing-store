@@ -1,7 +1,8 @@
-import { UserFilters } from '@/features/admin/user/model/types'
+import { getUsersAction } from '@/actions/account.actions'
+import { getSession } from '@/domain/auth/get-session'
 import { UsersTable, UsersToolbar } from '@/features/admin/user/ui'
 import { UsersHeader } from '@/features/admin/user/ui/users-header'
-import { userService } from '@/services/admin/user.service'
+import { UserFilters } from '@/shared/lib/zod/account.schema'
 
 export default async function AdminUsersPage({
 	searchParams,
@@ -9,16 +10,17 @@ export default async function AdminUsersPage({
 	searchParams: UserFilters
 }) {
 	const params = await searchParams
-	const users = await userService.getUsersList({
+	const session = await getSession()
+	const users = await getUsersAction(session?.user.id || '', {
 		query: params.query,
 		role: params.role,
 	})
 
 	return (
 		<div className='space-y-6'>
-			<UsersHeader count={users.length} />
+			<UsersHeader count={users.data.length} />
 			<UsersToolbar />
-			<UsersTable users={users} />
+			<UsersTable users={users.data} />
 		</div>
 	)
 }

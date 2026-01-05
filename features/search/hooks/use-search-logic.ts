@@ -1,3 +1,5 @@
+'use client'
+
 import { useDebounce, useUpdateParams } from '@/shared/hooks'
 import { useEffect, useState } from 'react'
 

@@ -1,4 +1,3 @@
-
 // Todo исправить типы OrderRow
 import Link from 'next/link'
 import { IoCardOutline } from 'react-icons/io5'
@@ -8,10 +7,12 @@ import clsx from 'clsx'
 import { currencyFormat } from '@/shared/utils/currencyFormat'
 import { DataTable } from '@/shared/ui/data-table'
 import { ItemSize } from '@prisma/client'
+import { IOrder } from '@/domain/order/types'
 
 export default async function OrdersPage() {
 	const response = await getOrdersByUserAction()
-	const orders = response.data || []
+
+	const orders: IOrder[] = (response.data as unknown as IOrder[]) || []
 
 	const columns = [
 		{ header: '#ID Заказа', key: 'id' },
@@ -36,17 +37,7 @@ export default async function OrdersPage() {
 }
 
 type Props = {
-	order: {
-		id: string
-		quantity: number
-		price: number
-		size: ItemSize
-		orderId: string
-		variantId: string
-		createdAt: string
-		status: OrderStatus
-		totalAmount: number
-	}
+	order: IOrder
 }
 
 export const OrderRow = ({ order }: Props) => {

@@ -1,4 +1,4 @@
-'use client'
+export const dynamic = 'force-dynamic'
 
 import { useSearchLogic, useSearchItems } from '@/features/search/hooks/'
 import { SearchHeader, SearchResults } from '@/features/search/ui'

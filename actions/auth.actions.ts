@@ -4,13 +4,12 @@ import { AuthService } from '@/services/auth.service'
 import { RegisterSchema } from './account.schema'
 import { LoginSchema } from './auth.schema'
 
-const service = new AuthService()
 
 export async function registerAction(raw: unknown) {
 	const parsed = RegisterSchema.safeParse(raw)
 	if (!parsed.success) return { error: 'Некорректные данные' }
 
-	await service.register(parsed.data)
+	await AuthService.register(parsed.data)
 	return { success: true }
 }
 

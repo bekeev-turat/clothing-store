@@ -15,7 +15,7 @@ import {
 } from '@/shared/ui'
 import { RoleBadge } from './role-badge'
 import { Account, UserRole } from '@/prisma/generated/client'
-import { deleteUserAction } from '@/actions/admin/delete-user.action'
+// import { deleteUserAction } from '@/actions/admin/delete-user.action'
 import { updateUserRole } from '@/actions/admin/update-role.action'
 
 interface UserRowProps {
@@ -28,13 +28,13 @@ export const UserRow = ({ user }: UserRowProps) => {
 	const [isDeleting, setIsDeleting] = useState(false)
 	const [showConfirm, setShowConfirm] = useState(false)
 
-	const onDelete = () =>
-		startTransition(async () => {
-			const res = await deleteUserAction(user.id)
-			res.success
-				? toast.success('Удалено')
-				: toast.error(res.error || 'Ошибка удаления')
-		})
+	// const onDelete = () =>
+	// 	startTransition(async () => {
+	// 		const res = await deleteUserAction(user.id)
+	// 		res.success
+	// 			? toast.success('Удалено')
+	// 			: toast.error(res.error || 'Ошибка удаления')
+	// 	})
 
 	const onChangeRole = (role: UserRole) =>
 		startTransition(async () => {
@@ -120,7 +120,7 @@ export const UserRow = ({ user }: UserRowProps) => {
 				</td>
 			</tr>
 
-			<ConfirmModal
+			{/* <ConfirmModal
 				open={showConfirm}
 				onClose={() => setShowConfirm(false)}
 				onConfirm={onDelete}
@@ -128,7 +128,7 @@ export const UserRow = ({ user }: UserRowProps) => {
 				description='Это действие нельзя отменить. Аккаунт будет полностью удален.'
 				confirmText='Удалить'
 				variant='danger'
-			/>
+			/> */}
 		</>
 	)
 }

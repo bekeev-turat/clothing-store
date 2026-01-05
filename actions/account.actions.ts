@@ -3,8 +3,7 @@
 import { ensureAdmin, getSessionOrThrow } from '@/shared/lib/auth-utils'
 import { AccountService } from '../services/account.service'
 import { ChangeRoleSchema, UpdateProfileSchema } from './account.schema'
-
-const service = new AccountService()
+import { UserFiltersSchema } from '@/shared/lib/zod/account.schema'
 
 export async function updateProfileAction(rawFields: unknown) {
 	try {
@@ -19,7 +18,7 @@ export async function updateProfileAction(rawFields: unknown) {
 			}
 		}
 
-		const result = await service.updateProfile(
+		const result = await AccountService.updateProfile(
 			session.user.id,
 			validatedFields.data,
 		)
@@ -39,7 +38,7 @@ export async function changeUserRoleAction(rawFields: unknown) {
 		if (!validatedFields.success) return { error: 'Некорректные данные' }
 
 		const { targetUserId, role } = validatedFields.data
-		await service.changeRole(session.user.id, targetUserId, role)
+		await AccountService.changeRole(session.user.id, targetUserId, role)
 		return { success: true }
 	} catch (e: unknown) {
 		const message = e instanceof Error ? e.message : 'Что-то пошло не так'
@@ -50,7 +49,7 @@ export async function changeUserRoleAction(rawFields: unknown) {
 export async function getProfileAction() {
 	try {
 		const session = await getSessionOrThrow()
-		const user = await service.getProfile(session.user.id)
+		const user = await AccountService.getProfile(session.user.id)
 		return { data: user, error: null }
 	} catch (e: unknown) {
 		const message =
@@ -59,3 +58,18 @@ export async function getProfileAction() {
 		return { data: null, error: message }
 	}
 }
+
+export async function getUsersAction(adminId: string, rawInput: unknown) {
+	const result = UserFiltersSchema.safeParse(rawInput)
+
+	if (!result.success) {
+		throw new Error('Invalid filters')
+	}
+
+	return await AccountService.getAllUsers(adminId, result.data)
+}
+
+// export async function deleteUserAction(id: string) {
+// 	await AccountService.delete(id)
+// 	// Здесь можно добавить revalidatePath('/admin/users')
+// }
