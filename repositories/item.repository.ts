@@ -75,4 +75,11 @@ export const itemRepository = {
 			where: buildItemWhere(filters),
 		})
 	},
+	async getUniqueBrands(): Promise<string[] | null> {
+		const brands = await prisma.item.findMany({
+			select: { brand: true },
+			distinct: ['brand'],
+		})
+		return brands.map((b) => b.brand).sort()
+	},
 }

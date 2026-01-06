@@ -46,7 +46,7 @@ export const ColorSelector = ({
 								src={variant.imageUrl}
 								alt={variant.color}
 								fill
-								sizes='300px'
+								sizes='100px'
 								className='object-cover'
 							/>
 						</button>

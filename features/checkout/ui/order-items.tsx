@@ -23,6 +23,7 @@ export const OrderItems = ({ items }: { items: ICartItem[] }) => (
 						<Image
 							src={item.image}
 							alt={item.title}
+							sizes='200px'
 							fill
 							className='object-cover'
 						/>

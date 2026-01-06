@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server'
 import { getStripe } from '@/shared/lib'
 
-interface Params {
-	id: string
-}
-
-export async function GET(req: Request, { params }: { params: Params }) {
-	// export async function GET(_req: Request, { params }: { params: Params }) {
-	// 	console.log('CTX:', id)
-	// 	return NextResponse.json({ ok: true })
-	// }
+export async function GET(
+	req: Request,
+	{ params }: { params: Promise<{ id: string }> },
+) {
 	try {
 		const { id } = await params
 

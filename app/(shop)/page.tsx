@@ -13,6 +13,7 @@ import { getProductGroupsWithCountAction } from '@/actions/groups.actions'
 import { catalogParamsSchema } from '@/shared/lib/zod/catalog.schema'
 import { GroupWithCountSchema } from '@/shared/lib/zod/groups.schema'
 import { parsePage } from '@/shared/lib'
+import { getProductBrandsAction } from '@/actions/get-brands.actions'
 
 export const revalidate = 60
 
@@ -20,7 +21,6 @@ interface Props {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-// Применяем SRP: Метаданные отдельно
 export async function generateMetadata({
 	searchParams,
 }: Props): Promise<Metadata> {
@@ -37,13 +37,16 @@ export async function generateMetadata({
 export default async function Home({ searchParams }: Props) {
 	const rawParams = await searchParams
 	const validatedParams = catalogParamsSchema.parse(rawParams)
+	
 
-	const [productsResponse, groupsResponse] = await Promise.all([
+	const [productsResponse, groupsResponse, brandsResponse] = await Promise.all([
 		fetchCatalogProductsAction(validatedParams),
 		getProductGroupsWithCountAction(validatedParams.gender),
+		getProductBrandsAction(),
 	])
 
 	if (
+		!brandsResponse ||
 		!productsResponse ||
 		!productsResponse.success ||
 		!productsResponse.data
@@ -51,6 +54,7 @@ export default async function Home({ searchParams }: Props) {
 		return notFound()
 	}
 
+	const brands = brandsResponse.data
 	const { data, meta } = productsResponse.data
 	const groupsResult = z.array(GroupWithCountSchema).safeParse(groupsResponse)
 	const groups = groupsResult.success ? groupsResult.data : []
@@ -58,6 +62,7 @@ export default async function Home({ searchParams }: Props) {
 	return (
 		<div className='max-w-7xl mx-auto'>
 			<CatalogContent
+				brands={brands}
 				data={data}
 				groups={groups}
 				currentGender={validatedParams.gender}

@@ -27,6 +27,7 @@ const ProfilePage = async () => {
 								src={user.avatar}
 								alt={user.username}
 								fill
+								sizes='96px'
 								className='rounded-full object-cover'
 							/>
 						) : (

@@ -30,6 +30,8 @@ export const mapItemToCatalog = (item: PrismaCatalogItem): CatalogItem => ({
 	name: item.name,
 	price: item.price,
 	slug: item.slug,
+	brand: item.brand,
+	tags: item.tags,
 	variant: item.variants[0]
 		? {
 				id: item.variants[0].id,

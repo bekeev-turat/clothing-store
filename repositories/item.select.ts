@@ -7,6 +7,7 @@ export const CATALOG_ITEM_SELECT = {
 	brand: true,
 	gender: true,
 	slug: true,
+	tags: true,
 	variants: {
 		take: 1,
 		select: {

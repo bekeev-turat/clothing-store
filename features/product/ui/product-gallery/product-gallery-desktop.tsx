@@ -91,7 +91,7 @@ export function ProductGalleryDesktop({ images, title, className }: Props) {
 								src={img}
 								alt={title}
 								fill
-								quality={90}
+								quality={85}
 								sizes='(min-width: 1024px) 600px, 90vw'
 								priority={index === 0}
 								className='object-contain'

@@ -6,7 +6,7 @@ import { cn } from '@/shared/lib'
 
 export function GenderToggle({ currentGender }: { currentGender?: string }) {
 	return (
-		<div className='flex justify-between gap-10 mb-10'>
+		<div className='flex justify-between gap-10'>
 			{GENDER_OPTIONS.map((gender) => (
 				<Link
 					key={gender.value}

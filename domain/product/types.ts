@@ -51,6 +51,8 @@ export interface CatalogItem {
 	name: string
 	price: number
 	slug: string
+	tags: string[]
+	brand: string,
 	variant: {
 		id: string
 		color: string

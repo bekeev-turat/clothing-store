@@ -71,4 +71,10 @@ export const itemService = {
 		if (!item) return null
 		return item
 	},
+	async getUniqueBrands(): Promise<string[] | null> {
+		const brands = await itemRepository.getUniqueBrands()
+
+		if (!brands) return null
+		return brands
+	},
 }
