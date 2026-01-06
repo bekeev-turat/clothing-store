@@ -6,13 +6,17 @@ import { OrderStatus } from '@/prisma/generated/client'
 import clsx from 'clsx'
 import { currencyFormat } from '@/shared/utils/currencyFormat'
 import { DataTable } from '@/shared/ui/data-table'
-import { ItemSize } from '@prisma/client'
 import { IOrder } from '@/domain/order/types'
 
 export default async function OrdersPage() {
 	const response = await getOrdersByUserAction()
+	console.log(response);
+	if (!response.success) {
+		return <div>Ошибка загрузки заказов</div>
+	}
+	
 
-	const orders: IOrder[] = (response.data as unknown as IOrder[]) || []
+	const orders = response.data
 
 	const columns = [
 		{ header: '#ID Заказа', key: 'id' },
@@ -30,7 +34,7 @@ export default async function OrdersPage() {
 				items={orders}
 				columns={columns}
 				emptyText='У вас пока нет заказов'
-				renderRow={(order) => <OrderRow order={order} />}
+				renderRow={(order) => <OrderRow key={order.id} order={order} />}
 			/>
 		</div>
 	)
@@ -42,7 +46,7 @@ type Props = {
 
 export const OrderRow = ({ order }: Props) => {
 	return (
-		<tr key={order.id} className='transition-colors hover:bg-gray-50'>
+		<tr className='transition-colors hover:bg-gray-50'>
 			<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
 				{order.id.slice(-8).toUpperCase()}
 			</td>

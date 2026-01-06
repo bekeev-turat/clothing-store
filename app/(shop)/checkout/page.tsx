@@ -47,7 +47,7 @@ const CheckoutPage = () => {
 							actionButton={
 								<Button
 									onClick={onPlaceOrder}
-									className='w-full h-12 text-lg font-bold'
+									className='w-full h-12 text-lg font-bold hover:scale-105 transition-transform'
 									size='lg'
 									disabled={isPending}
 								>

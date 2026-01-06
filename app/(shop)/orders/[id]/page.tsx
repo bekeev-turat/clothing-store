@@ -14,12 +14,22 @@ export default async function OrderPage({ params }: Props) {
 	const { id } = await params
 
 	const response = await getOrderByIdAction(id)
+	console.log(response)
 
 	// Если заказ не найден, показываем 404
 	if (!response.success || !response.data) {
 		notFound()
 	}
 
+	const address = {
+		firstName: response.data.address,
+		lastName: response.data.lastName,
+		address: response.data.address,
+		address2: response.data.address2,
+		city: response.data.city,
+		zip: response.data.zip,
+		phone: response.data.phone,
+	}
 	const order = response.data
 	const isPaid = order.status === OrderStatus.PAID
 
@@ -55,7 +65,7 @@ export default async function OrderPage({ params }: Props) {
 				</div>
 
 				<div className='flex flex-col gap-6'>
-					<OrderSummary totals={totals} isPaid={isPaid} userId={order.userId} />
+					<OrderSummary address={address} totals={totals} isPaid={isPaid} userId={order.userId} />
 				</div>
 			</div>
 		</section>

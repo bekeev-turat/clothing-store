@@ -50,7 +50,7 @@ const CartPage = () => {
 						<Link
 							href={ROUTE_MAP.cart.checkout}
 							className={cn(
-								'w-full bg-black text-white py-4 px-2 rounded-lg font-bold text-center',
+								'block w-full bg-black text-white py-4 rounded-lg font-bold text-center transition-transform hover:scale-105 mt-2',
 								totals.totalItems === 0 && 'opacity-50 pointer-events-none',
 							)}
 						>
