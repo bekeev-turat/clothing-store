@@ -13,6 +13,8 @@ async function main() {
 	// ------------------------------
 	// 1) Groups
 	// ------------------------------
+	console.log('🌱 Seeding groups...')
+
 	for (const group of groupsData) {
 		const upserted = await prisma.group.upsert({
 			where: { slug: group.slug },
@@ -21,15 +23,20 @@ async function main() {
 		})
 		groups[group.slug] = upserted
 	}
-	console.log('🌱 Starting seed...')
-
 	// ------------------------------
 	// 2) Items
 	// ------------------------------
-
+	console.log('🌱 Seeding items...')
 	for (const item of itemsFemaleData) {
 		const { variants, groupSlug, ...itemBase } = item
 
+		const group = groups[groupSlug]
+
+		if (!group) {
+			throw new Error(
+				`❌ Group with slug "${groupSlug}" not found for item "${itemBase.slug}"`,
+			)
+		}
 		await prisma.item.upsert({
 			where: { slug: itemBase.slug },
 			update: {},

@@ -94,7 +94,7 @@ export const itemsFemaleData = [
 		// Используем специфичные для брюк ключи
 		measurements:
 			'Обхват талии 77 см, длина внутреннего шагового шва 75 см, длина по внешнему шву 103 см.',
-		groupSlug: 'hoodie-malex',
+		groupSlug: 'hoodie-female',
 
 		variants: [
 			{

@@ -35,12 +35,21 @@ CREATE TABLE "Item" (
     "code" TEXT,
     "modelHeight" INTEGER,
     "modelSize" "ItemSize",
-    "measurements" JSONB,
+    "measurements" TEXT NOT NULL,
     "groupId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Item_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Look" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Look_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -58,6 +67,7 @@ CREATE TABLE "item_variants" (
     "color" TEXT NOT NULL,
     "availableSizes" "ItemSize"[] DEFAULT ARRAY[]::"ItemSize"[],
     "itemId" TEXT NOT NULL,
+    "lookId" TEXT,
 
     CONSTRAINT "item_variants_pkey" PRIMARY KEY ("id")
 );
@@ -78,6 +88,13 @@ CREATE TABLE "orders" (
     "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
     "totalAmount" DOUBLE PRECISION NOT NULL,
     "userId" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "address" TEXT NOT NULL,
+    "address2" TEXT,
+    "city" TEXT NOT NULL,
+    "zip" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -143,6 +160,9 @@ ALTER TABLE "item_images" ADD CONSTRAINT "item_images_variantId_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "item_variants" ADD CONSTRAINT "item_variants_itemId_fkey" FOREIGN KEY ("itemId") REFERENCES "Item"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "item_variants" ADD CONSTRAINT "item_variants_lookId_fkey" FOREIGN KEY ("lookId") REFERENCES "Look"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Stock" ADD CONSTRAINT "Stock_variantId_fkey" FOREIGN KEY ("variantId") REFERENCES "item_variants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
