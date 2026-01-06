@@ -1,6 +1,7 @@
 import { currencyFormat } from '@/shared/utils/currencyFormat'
 import { IoCardOutline } from 'react-icons/io5'
 import clsx from 'clsx'
+import { IAddress } from '@/domain/order/types'
 
 interface Props {
 	isPaid: boolean
@@ -10,20 +11,21 @@ interface Props {
 		tax: number
 		total: number
 	}
+	address: IAddress
 	userId: string
 }
 
-export const OrderSummary = ({ totals, isPaid, userId }: Props) => {
+export const OrderSummary = ({ totals, isPaid, userId, address }: Props) => {
 	return (
 		<div className='border rounded-xl p-6 bg-white shadow-sm h-fit'>
 			<h2 className='text-xl font-bold mb-4'>Адрес доставки</h2>
 			<div className='text-sm leading-relaxed mb-6'>
 				<p className='font-medium text-black'>Пользователь ID: {userId}</p>
-				<p className='font-semibold'>Иван Иванов</p>
-				<p>ул. Ленина, д. 10, кв. 5</p>
-				<p>Москва, Россия</p>
-				<p>101000</p>
-				<p>+996 (789) 12-34-67</p>
+				<p className='font-semibold'>{`${address.firstName} ${address.lastName}`}</p>
+				<p>{address.address}</p>
+				<p>{address.city}</p>
+				<p>{address.zip}</p>
+				<p>{address.phone}</p>
 			</div>
 
 			<div className='border-t pt-4 mb-6'>

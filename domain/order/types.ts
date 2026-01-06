@@ -29,3 +29,13 @@ export interface IOrder {
 	totalAmount: number
 	items: OrderItem[]
 }
+
+export interface IAddress {
+	firstName: string
+	lastName: string
+	address: string
+	address2: string | null
+	city: string
+	zip: string
+	phone: string
+}

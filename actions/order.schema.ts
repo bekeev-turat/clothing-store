@@ -12,6 +12,18 @@ export const CreateOrderSchema = z.object({
 			}),
 		)
 		.min(1, 'Заказ не может быть пустым'),
+	address: z.object({
+		firstName: z.string().min(2, 'Имя слишком короткое'),
+		lastName: z.string().min(2, 'Фамилия слишком короткая'),
+		address: z.string().min(5, 'Укажите полный адрес'),
+		address2: z.string().optional(),
+		city: z.string().min(2, 'Укажите город'),
+		zip: z.string().regex(/^\d{5,6}$/, 'Некорректный почтовый индекс'),
+		phone: z
+			.string()
+			.regex(/^\+?[1-9]\d{1,14}$/, 'Некорректный номер телефона'),
+	}),
+
 })
 
 export type CreateOrderInput = z.infer<typeof CreateOrderSchema>

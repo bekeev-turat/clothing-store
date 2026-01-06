@@ -48,14 +48,37 @@ export const useCheckout = () => {
 			const result = await createOrderAction({
 				userId: session!.user.id,
 				address,
-				items: items.map(({ id, quantity }) => ({ variantId: id, quantity })),
+				items: items.map(({ id, quantity, price, size }) => ({
+					variantId: id,
+					quantity,
+					price,
+					size,
+				})),
 			})
 
-			if (!result.success) throw new Error(result.message)
+			if (!result.success) {
+				if (result.errors) {
+					Object.values(result.errors)
+						.flat()
+						.forEach((msg) => {
+							if (msg) toast.error(msg)
+						})
+				} else {
+					toast.error(result.message)
+				}
+				toast.dismiss(toastId)
+				return
+			}
 
 			dispatch(clearCart())
+
 			toast.success('Заказ создан!', { id: toastId })
-			router.push(`/orders/payment/${result.orderId}`)
+
+			if (result.url) {
+				window.location.href = result.url
+			} else {
+				router.push(`/orders/${result.orderId}`)
+			}
 		} catch (error: unknown) {
 			const message =
 				error instanceof Error ? error.message : 'Произошла ошибка'

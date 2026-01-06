@@ -44,6 +44,13 @@ export const orderService = {
 							variant: { connect: { id: item.variantId } },
 						})),
 					},
+					firstName: data.address.firstName,
+					lastName: data.address.lastName,
+					address: data.address.address,
+					address2: data.address.address2,
+					city: data.address.city,
+					zip: data.address.zip,
+					phone: data.address.phone,
 				},
 				tx,
 			)
@@ -52,6 +59,11 @@ export const orderService = {
 	async getOrderById(id: string) {
 		const order = await OrderRepository.findById(id)
 		if (!order) throw new Error('Заказ не найден')
+		return order
+	},
+	async getOrderByUserId(userId: string) {
+		const order = await OrderRepository.findByUserId(userId)
+		if (!order) throw new Error('Заказы не найден')
 		return order
 	},
 
