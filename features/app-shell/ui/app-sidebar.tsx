@@ -1,20 +1,20 @@
 'use client'
 
 import Link from 'next/link'
-import clsx from 'clsx'
 import { signOut, useSession } from 'next-auth/react'
-
 import { useAppDispatch, useAppSelector } from '@/shared/store/hooks'
 import { closeMenu } from '@/features/cart/store/ui/ui.slice'
 import { ROUTE_MAP } from '@/shared/config/routes'
+import { ADMIN_MENU } from '../config/admin-menu.config'
+import { cn } from '@/shared/lib' 
 
 import {
 	IoLogInOutline,
 	IoLogOutOutline,
 	IoPersonOutline,
 	IoTicketOutline,
+	IoCloseOutline,
 } from 'react-icons/io5'
-import { ADMIN_MENU } from '../config/admin-menu.config'
 
 export const AppSidebar = () => {
 	const dispatch = useAppDispatch()
@@ -34,86 +34,99 @@ export const AppSidebar = () => {
 	return (
 		<>
 			{/* Overlay */}
-			{isOpen && (
-				<div className='fixed inset-0 z-30 bg-black/40' onClick={close} />
-			)}
+			<div
+				className={cn(
+					'fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300',
+					isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
+				)}
+				onClick={close}
+			/>
 
 			{/* Sidebar */}
 			<aside
-				className={clsx(
-					'fixed top-0 left-0 z-40 h-screen w-[360px] bg-white',
-					'flex flex-col transition-transform duration-300',
-					{
-						'-translate-x-full': !isOpen,
-						'translate-x-0': isOpen,
-					},
+				className={cn(
+					'fixed top-0 left-0 z-50 h-screen w-full max-w-[320px] shadow-2xl transition-transform duration-300 ease-in-out',
+					'bg-sidebar text-sidebar-foreground border-r border-sidebar-border',
+					isOpen ? 'translate-x-0' : '-translate-x-full',
 				)}
 			>
-				{/* Header */}
-				<div className='px-5 py-4 border-b'>
-					<h2 className='text-2xl font-semibold'>Меню</h2>
-				</div>
-
-				{/* Content */}
-				<nav className='flex-1 px-4 py-6 space-y-2'>
-					{isAuth && (
-						<>
-							<NavItem
-								href={ROUTE_MAP.profile}
-								icon={<IoPersonOutline />}
-								label='Мой профиль'
-								onClick={close}
-							/>
-
-							<NavItem
-								href={ROUTE_MAP.orders.root}
-								icon={<IoTicketOutline />}
-								label='Мои заказы'
-								onClick={close}
-							/>
-						</>
-					)}
-
-					{!isAuth ? (
-						<NavItem
-							href={ROUTE_MAP.auth.login}
-							icon={<IoLogInOutline />}
-							label='Авторизация'
-							onClick={close}
-						/>
-					) : (
+				<div className='flex h-full flex-col'>
+					{/* Header */}
+					<div className='flex items-center justify-between px-6 py-5 border-b border-sidebar-border'>
+						<h2 className='text-lg font-bold tracking-tight'>Меню</h2>
 						<button
-							onClick={logout}
-							className='flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-red-600 hover:bg-red-50'
+							onClick={close}
+							className='p-1 rounded-md hover:bg-sidebar-accent transition-colors'
 						>
-							<IoLogOutOutline />
-							<span>Выйти</span>
+							<IoCloseOutline size={24} />
 						</button>
-					)}
+					</div>
 
-					{isAdmin && (
-						<>
-							<div className='my-4 h-px bg-gray-200' />
-
-							<p className='px-3 text-xs font-medium uppercase text-gray-400'>
-								Администрирование
-							</p>
-							{ADMIN_MENU.map((el, i) => (
+					{/* Content */}
+					<nav className='flex-1 overflow-y-auto px-4 py-6 space-y-1.5'>
+						{isAuth && (
+							<>
 								<NavItem
-									key={i}
-									href={el.href}
-									icon={<el.icon size={16} />}
-									label={el.label}
+									href={ROUTE_MAP.profile}
+									icon={<IoPersonOutline />}
+									label='Мой профиль'
 									onClick={close}
 								/>
-							))}
-						</>
-					)}
-				</nav>
 
-				{/* Footer */}
-				<div className='border-t px-5 py-3 text-xs text-gray-400'>
-					© {new Date().getFullYear()} BeUp
+								<NavItem
+									href={ROUTE_MAP.orders.root}
+									icon={<IoTicketOutline />}
+									label='Мои заказы'
+									onClick={close}
+								/>
+							</>
+						)}
+
+						{!isAuth ? (
+							<NavItem
+								href={ROUTE_MAP.auth.login}
+								icon={<IoLogInOutline />}
+								label='Авторизация'
+								onClick={close}
+							/>
+						) : (
+							<button
+								onClick={logout}
+								className='flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors text-destructive hover:bg-destructive/10'
+							>
+								<IoLogOutOutline size={20} />
+								<span>Выйти</span>
+							</button>
+						)}
+
+						{isAdmin && (
+							<div className='pt-4'>
+								<div className='mb-2 px-3'>
+									<p className='text-[11px] font-bold uppercase tracking-wider text-muted-foreground/70'>
+										Администрирование
+									</p>
+								</div>
+								<div className='space-y-1'>
+									{ADMIN_MENU.map((el, i) => (
+										<NavItem
+											key={i}
+											href={el.href}
+											icon={<el.icon size={18} />}
+											label={el.label}
+											onClick={close}
+										/>
+									))}
+								</div>
+							</div>
+						)}
+					</nav>
+
+					{/* Footer */}
+					<div className='mt-auto border-t border-sidebar-border px-6 py-5'>
+						<p className='text-xs text-muted-foreground font-medium'>
+							© {new Date().getFullYear()} BeUp
+						</p>
+					</div>
 				</div>
 			</aside>
 		</>
@@ -133,9 +146,13 @@ const NavItem = ({ href, label, icon, onClick }: NavItemProps) => (
 	<Link
 		href={href}
 		onClick={onClick}
-		className='flex items-center gap-3 rounded-md px-3 py-2 text-sm hover:bg-gray-100'
+		className={cn(
+			'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all',
+			'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+			'active:scale-[0.98]',
+		)}
 	>
-		<span className='text-lg'>{icon}</span>
+		<span className='text-xl opacity-80'>{icon}</span>
 		<span>{label}</span>
 	</Link>
 )

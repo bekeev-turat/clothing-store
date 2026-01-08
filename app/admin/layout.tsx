@@ -4,6 +4,14 @@ import {
 	AdminMenuItem,
 } from '@/features/app-shell/config/admin-menu.config'
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: {
+		template: '%s | Панель управления', // %s заменится на title из дочерней page.tsx
+		default: 'Админ-панель',
+	},
+}
 
 export default async function AdminLayout({
 	children,
