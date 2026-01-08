@@ -1,21 +1,26 @@
-// src/app/(auth)/forgot-password/page.tsx
 'use client'
 
-import Link from 'next/link'
-import { useForm } from 'react-hook-form'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import Link from 'next/link'
 import { ArrowLeft, MailCheck } from 'lucide-react'
-import { AuthInput } from '@/shared/ui/auth-input'
+
+import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/shared/ui/form'
 import { ROUTE_MAP } from '@/shared/config/routes'
 
-export default function ResetPasswordPage() {
+export default function ForgotPasswordPage() {
 	const [isSent, setIsSent] = useState(false)
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors, isSubmitting },
-	} = useForm({
+	const form = useForm({
 		defaultValues: {
 			email: '',
 		},
@@ -31,68 +36,81 @@ export default function ResetPasswordPage() {
 	// Состояние после успешной отправки письма
 	if (isSent) {
 		return (
-			<div className='text-center'>
-				<div className='mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6'>
+			<div className='text-center space-y-6'>
+				<div className='mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100'>
 					<MailCheck className='h-8 w-8 text-green-600' />
 				</div>
-				<h2 className='text-2xl font-bold text-gray-800'>Проверьте почту</h2>
-				<p className='text-gray-500 text-sm mt-3 mb-8'>
-					Мы отправили инструкцию по восстановлению пароля на ваш электронный
-					адрес.
-				</p>
-				<Link
-					href={ROUTE_MAP.home}
-					className='inline-flex items-center text-indigo-600 hover:text-indigo-500 font-medium transition-colors'
-				>
-					<ArrowLeft className='mr-2 h-4 w-4' />
-					Вернуться к входу
-				</Link>
+				<div className='space-y-2'>
+					<h2 className='text-2xl font-bold tracking-tight'>Проверьте почту</h2>
+					<p className='text-muted-foreground text-sm'>
+						Мы отправили инструкцию по восстановлению пароля на ваш электронный
+						адрес.
+					</p>
+				</div>
+				<div className='pt-4'>
+					<Link
+						href={ROUTE_MAP.auth.login || '/login'}
+						className='inline-flex items-center text-sm font-medium text-primary hover:underline'
+					>
+						<ArrowLeft className='mr-2 h-4 w-4' />
+						Вернуться к входу
+					</Link>
+				</div>
 			</div>
 		)
 	}
 
 	return (
-		<>
-			<div className='mb-6'>
-				<h2 className='text-2xl font-bold text-gray-800'>Забыли пароль?</h2>
-				<p className='text-gray-500 text-sm'>
+		<div className='w-full max-w-md mx-auto space-y-6'>
+			<div className='space-y-2 text-center'>
+				<h2 className='text-3xl font-bold tracking-tight'>Забыли пароль?</h2>
+				<p className='text-muted-foreground text-sm'>
 					Введите ваш email, и мы отправим вам ссылку для восстановления
 					доступа.
 				</p>
 			</div>
 
-			<form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
-				<AuthInput
-					label='Email адрес'
-					type='email'
-					placeholder='name@company.com'
-					registration={register('email', {
-						required: 'Введите email',
-						pattern: {
-							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-							message: 'Некорректный формат почты',
-						},
-					})}
-					error={errors.email?.message}
-				/>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+					<FormField
+						control={form.control}
+						name='email'
+						rules={{
+							required: 'Введите email',
+							pattern: {
+								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								message: 'Некорректный формат почты',
+							},
+						}}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email адрес</FormLabel>
+								<FormControl>
+									<Input placeholder='name@company.com' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				<button
-					type='submit'
-					disabled={isSubmitting}
-					className='w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-lg transition-all active:scale-[0.98]'
-				>
-					{isSubmitting ? 'Отправка...' : 'Сбросить пароль'}
-				</button>
-
-				<div className='text-center mt-4'>
-					<Link
-						href='/login'
-						className='inline-flex items-center text-sm text-gray-500 hover:text-indigo-600 transition-colors'
+					<Button
+						type='submit'
+						className='w-full'
+						disabled={form.formState.isSubmitting}
 					>
-						<ArrowLeft className='mr-2 h-4 w-4' />Я вспомнил пароль
-					</Link>
-				</div>
-			</form>
-		</>
+						{form.formState.isSubmitting ? 'Отправка...' : 'Сбросить пароль'}
+					</Button>
+				</form>
+			</Form>
+
+			<div className='text-center'>
+				<Link
+					href={ROUTE_MAP.auth.login || '/login'}
+					className='inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors'
+				>
+					<ArrowLeft className='mr-2 h-4 w-4' />Я вспомнил пароль
+				</Link>
+			</div>
+		</div>
 	)
 }

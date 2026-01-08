@@ -1,43 +1,41 @@
 'use client'
 
-import { loginAction } from '@/actions/auth.actions'
-import { ROUTE_MAP } from '@/shared/config/routes'
-import { AuthInput } from '@/shared/ui/auth-input'
-import { signIn } from 'next-auth/react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-// import { signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
-type LoginFormValues = {
-	email: string
-	password: string
-}
+import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/shared/ui/form'
+import { ROUTE_MAP } from '@/shared/config/routes'
+import toast from 'react-hot-toast'
+
 export default function LoginPage() {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm({
+	const router = useRouter()
+	const form = useForm({
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 	})
-	const router = useRouter()
 
-	const onSubmit = async (data: LoginFormValues) => {
-		// No event.preventDefault() needed; handleSubmit handles it
-		// No new FormData() needed; data is already a plain object
-
+	const onSubmit = async (data: { email: string; password: string }) => {
 		const res = await signIn('credentials', {
-			email: data.email, // Access properties directly
+			email: data.email,
 			password: data.password,
 			redirect: false,
 		})
 
 		if (res?.error) {
-			alert('Неверный email или пароль')
+			toast.error('Неверный email или пароль')
 			return
 		}
 
@@ -45,63 +43,73 @@ export default function LoginPage() {
 	}
 
 	return (
-		<>
-			<div className='mb-6'>
-				<h2 className='text-2xl font-bold text-gray-800'>С возвращением!</h2>
-				<p className='text-gray-500 text-sm'>
+		<div className='w-full max-w-md mx-auto space-y-6'>
+			<div className='space-y-2 text-center'>
+				<h2 className='text-3xl font-bold tracking-tight'>С возвращением</h2>
+				<p className='text-muted-foreground text-sm'>
 					Войдите в систему, чтобы продолжить
 				</p>
 			</div>
 
-			<form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-				<AuthInput
-					label='Email'
-					type='email'
-					placeholder='name@company.com'
-					registration={register('email', { required: 'Введите email' })}
-					error={errors.email?.message}
-				/>
-
-				<div className='space-y-1'>
-					<div className='flex items-center justify-between'>
-						<label className='block text-sm font-medium text-gray-700'>
-							Пароль
-						</label>
-						<Link
-							href={ROUTE_MAP.auth.resetPassword}
-							className='text-xs text-indigo-600 hover:text-indigo-500 font-medium'
-						>
-							Забыли пароль?
-						</Link>
-					</div>
-					<AuthInput
-						type='password'
-						placeholder='••••••••'
-						registration={register('password', {
-							required: 'Введите пароль',
-							minLength: { value: 6, message: 'Минимум 6 символов' },
-						})}
-						error={errors.password?.message}
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+					<FormField
+						control={form.control}
+						name='email'
+						rules={{ required: 'Введите email' }}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email</FormLabel>
+								<FormControl>
+									<Input placeholder='name@company.com' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
 					/>
-				</div>
 
-				<button
-					type='submit'
-					className='w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition-all active:scale-[0.98]'
-				>
-					Войти
-				</button>
-			</form>
+					<FormField
+						control={form.control}
+						name='password'
+						rules={{ required: 'Введите пароль' }}
+						render={({ field }) => (
+							<FormItem>
+								<div className='flex items-center justify-between'>
+									<FormLabel>Пароль</FormLabel>
+									<Link
+										href={ROUTE_MAP.auth.resetPassword}
+										className='text-xs text-primary hover:underline font-medium'
+									>
+										Забыли пароль?
+									</Link>
+								</div>
+								<FormControl>
+									<Input type='password' placeholder='••••••••' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-			<p className='mt-6 text-center text-sm text-gray-600'>
+					<Button
+						type='submit'
+						className='w-full'
+						disabled={form.formState.isSubmitting}
+					>
+						{form.formState.isSubmitting ? 'Вход...' : 'Войти'}
+					</Button>
+				</form>
+			</Form>
+
+			<p className='text-center text-sm text-muted-foreground'>
 				Нет аккаунта?{' '}
 				<Link
 					href={ROUTE_MAP.auth.register}
-					className='text-indigo-600 hover:underline font-medium'
+					className='text-primary hover:underline font-medium'
 				>
 					Зарегистрироваться
 				</Link>
 			</p>
-		</>
+		</div>
 	)
 }

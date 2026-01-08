@@ -1,20 +1,28 @@
 'use client'
 
-import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import { AuthInput } from '@/shared/ui/auth-input'
-import { ROUTE_MAP } from '@/shared/config/routes'
 import { useRouter } from 'next/navigation'
-import { registerAction } from '@/actions/auth.actions'
+import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
+import { Button } from '@/shared/ui/button'
+import { Input } from '@/shared/ui/input'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/shared/ui/form'
+import { registerAction } from '@/actions/auth.actions'
+import { ROUTE_MAP } from '@/shared/config/routes'
+import toast from 'react-hot-toast'
+import { TRegisterSchema } from '@/shared/lib/zod/account.schema'
+
 export default function RegisterPage() {
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors, isSubmitting },
-	} = useForm({
+	const router = useRouter()
+	const form = useForm({
 		defaultValues: {
 			username: '',
 			email: '',
@@ -23,19 +31,17 @@ export default function RegisterPage() {
 		},
 	})
 
-	// Следим за значением пароля для валидации подтверждения
-	const passwordValue = watch('password')
-	const router = useRouter()
+	const password = form.watch('password')
 
-	const onSubmit = async (data: { email: string; password: string }) => {
+	const onSubmit = async (data: TRegisterSchema) => {
 		const res = await registerAction(data)
 
 		if (res?.error) {
-			alert(res.error)
+			toast.error(res.error)
 			return
 		}
 
-		const signInResult = await signIn('credentials', {
+		await signIn('credentials', {
 			email: data.email.toLowerCase(),
 			password: data.password,
 			redirect: false,
@@ -43,89 +49,107 @@ export default function RegisterPage() {
 
 		router.push(ROUTE_MAP.home)
 	}
+
 	return (
-		<>
-			<div className='mb-6'>
-				<h2 className='text-2xl font-bold text-gray-800'>Создать аккаунт</h2>
-				<p className='text-gray-500 text-sm'>
-					Присоединяйтесь к нашей платформе
-				</p>
+		<div className='w-full max-w-md mx-auto space-y-6'>
+			<div className='space-y-2 text-center'>
+				<h2 className='text-3xl font-bold tracking-tight'>Создать аккаунт</h2>
+				<p className='text-muted-foreground text-sm'>Присоединяйтесь к нам</p>
 			</div>
 
-			<form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-				{/* Имя пользователя */}
-				<AuthInput
-					label='Имя пользователя'
-					type='text'
-					placeholder='ivan_ivanov'
-					registration={register('username', {
-						required: 'Введите имя пользователя',
-						minLength: { value: 3, message: 'Минимум 3 символа' },
-					})}
-					error={errors.username?.message}
-				/>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+					<FormField
+						control={form.control}
+						name='username'
+						rules={{
+							required: 'Введите имя',
+							minLength: { value: 3, message: 'Минимум 3 символа' },
+						}}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Имя пользователя</FormLabel>
+								<FormControl>
+									<Input placeholder='asan_asanov' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				{/* Email */}
-				<AuthInput
-					label='Email'
-					type='email'
-					placeholder='name@company.com'
-					registration={register('email', {
-						required: 'Введите email',
-						pattern: {
-							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-							message: 'Некорректный email',
-						},
-					})}
-					error={errors.email?.message}
-				/>
+					<FormField
+						control={form.control}
+						name='email'
+						rules={{
+							required: 'Введите email',
+							pattern: { value: /\S+@\S+\.\S+/, message: 'Некорректный email' },
+						}}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email</FormLabel>
+								<FormControl>
+									<Input placeholder='name@company.com' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				{/* Пароль */}
-				<AuthInput
-					label='Пароль'
-					type='password'
-					placeholder='••••••••'
-					registration={register('password', {
-						required: 'Придумайте пароль',
-						minLength: {
-							value: 8,
-							message: 'Пароль должен быть не менее 8 символов',
-						},
-					})}
-					error={errors.password?.message}
-				/>
+					<FormField
+						control={form.control}
+						name='password'
+						rules={{
+							required: 'Придумайте пароль',
+							minLength: { value: 8, message: 'Минимум 8 символов' },
+						}}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Пароль</FormLabel>
+								<FormControl>
+									<Input type='password' placeholder='••••••••' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				{/* Подтверждение пароля */}
-				<AuthInput
-					label='Подтвердите пароль'
-					type='password'
-					placeholder='••••••••'
-					registration={register('confirmPassword', {
-						required: 'Повторите пароль',
-						validate: (value) =>
-							value === passwordValue || 'Пароли не совпадают',
-					})}
-					error={errors.confirmPassword?.message}
-				/>
+					<FormField
+						control={form.control}
+						name='confirmPassword'
+						rules={{
+							required: 'Повторите пароль',
+							validate: (val) => val === password || 'Пароли не совпадают',
+						}}
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Подтвердите пароль</FormLabel>
+								<FormControl>
+									<Input type='password' placeholder='••••••••' {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 
-				<button
-					type='submit'
-					disabled={isSubmitting}
-					className='w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-2.5 rounded-lg transition-all active:scale-[0.98] mt-2'
-				>
-					{isSubmitting ? 'Создание...' : 'Зарегистрироваться'}
-				</button>
-			</form>
+					<Button
+						type='submit'
+						className='w-full'
+						disabled={form.formState.isSubmitting}
+					>
+						{form.formState.isSubmitting ? 'Создание...' : 'Зарегистрироваться'}
+					</Button>
+				</form>
+			</Form>
 
-			<p className='mt-6 text-center text-sm text-gray-600'>
+			<p className='text-center text-sm text-muted-foreground'>
 				Уже есть аккаунт?{' '}
 				<Link
 					href={ROUTE_MAP.auth.login}
-					className='text-indigo-600 hover:underline font-medium'
+					className='text-primary hover:underline font-medium'
 				>
 					Войти
 				</Link>
 			</p>
-		</>
+		</div>
 	)
 }

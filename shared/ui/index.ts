@@ -1,4 +1,5 @@
 export { Footer } from './footer'
+export * from './accordion'
 export * from './input'
 export * from './select'
 export * from './dropdown-menu'
