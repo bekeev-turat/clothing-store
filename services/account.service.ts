@@ -1,8 +1,9 @@
 import { Prisma } from '@/prisma/generated/client'
 import { UserRole } from '@/prisma/generated/enums'
 import { AccountRepository } from '@/repositories/account.repository'
-import { UserFilters } from '@/shared/lib/zod/account.schema'
+import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
 import bcrypt from 'bcryptjs'
+import { redirect } from 'next/navigation'
 
 export const AccountService = {
 	async getProfile(id: string) {
@@ -29,7 +30,7 @@ export const AccountService = {
 		return AccountRepository.update(id, updateData)
 	},
 
-	async getAllUsers(adminId: string, filters: UserFilters) {
+	async getAllUsers(adminId: string, filters: TUserFiltersSchema) {
 		const requester = await AccountRepository.findById(adminId)
 		if (requester?.role !== UserRole.ADMIN) {
 			throw new Error('Доступ запрещен: требуется роль администратора')
@@ -55,5 +56,16 @@ export const AccountService = {
 			throw new Error('Только админ может менять роли')
 		}
 		return AccountRepository.update(targetUserId, { role: newRole })
+	},
+	async getCurrentAdmin(userId: string | undefined) {
+		if (!userId) redirect('/login')
+
+		const user = await AccountRepository.findById(userId)
+
+		if (!user || user.role !== 'ADMIN') {
+			redirect('/')
+		}
+
+		return user
 	},
 }

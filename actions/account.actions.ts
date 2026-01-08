@@ -2,8 +2,11 @@
 
 import { ensureAdmin, getSessionOrThrow } from '@/shared/lib/auth-utils'
 import { AccountService } from '../services/account.service'
-import { ChangeRoleSchema, UpdateProfileSchema } from './account.schema'
-import { UserFiltersSchema } from '@/shared/lib/zod/account.schema'
+import {
+	ChangeRoleSchema,
+	UpdateProfileSchema,
+	UserFiltersSchema,
+} from '@/shared/lib/zod/account.schema'
 
 export async function updateProfileAction(rawFields: unknown) {
 	try {
@@ -68,8 +71,3 @@ export async function getUsersAction(adminId: string, rawInput: unknown) {
 
 	return await AccountService.getAllUsers(adminId, result.data)
 }
-
-// export async function deleteUserAction(id: string) {
-// 	await AccountService.delete(id)
-// 	// Здесь можно добавить revalidatePath('/admin/users')
-// }

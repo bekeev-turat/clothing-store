@@ -1,8 +1,9 @@
-import { CreateOrderInput } from '@/actions/order.schema'
+import { CreateOrderInput } from '@/shared/lib/zod/order.schema'
 import { ItemSize, OrderStatus } from '@/prisma/generated/enums'
 import prisma from '@/lib/prisma'
 import { stockRepository } from '@/repositories/stock.repository'
 import { OrderRepository } from '@/repositories/order.repository'
+import { paymentService } from './payment.service'
 
 export const orderService = {
 	async createOrder(data: CreateOrderInput) {
@@ -13,17 +14,19 @@ export const orderService = {
 
 		return prisma.$transaction(async (tx) => {
 			for (const item of data.items) {
-				const stock = await stockRepository.findByVariantAndSize(
-					item.variantId,
-					item.size as ItemSize,
-					tx,
-				)
-
-				if (!stock || stock.quantity < item.quantity) {
-					throw new Error(`Товара размера ${item.size} недостаточно в наличии`)
-				}
-
 				try {
+					const stock = await stockRepository.findByVariantAndSize(
+						item.variantId,
+						item.size as ItemSize,
+						tx,
+					)
+
+					if (!stock || stock.quantity < item.quantity) {
+						throw new Error(
+							`Товара размера ${item.size} недостаточно в наличии`,
+						)
+					}
+
 					await stockRepository.updateQuantity(stock.id, -item.quantity, tx)
 				} catch (e) {
 					throw new Error(
@@ -40,7 +43,7 @@ export const orderService = {
 						create: data.items.map((item) => ({
 							quantity: item.quantity,
 							price: item.price,
-							size: item.size as ItemSize, // ВАЖНО: сохраняем размер в OrderItem
+							size: item.size as ItemSize,
 							variant: { connect: { id: item.variantId } },
 						})),
 					},
@@ -55,6 +58,16 @@ export const orderService = {
 				tx,
 			)
 		})
+	},
+	/**
+	 * Комплексный метод: создает заказ в БД И генерирует платежную сессию Stripe.
+	 */
+	async createOrderAndGeneratePayment(data: CreateOrderInput) {
+		const order = await this.createOrder(data)
+
+		const stripeUrl = await paymentService.createCheckoutSession(order)
+
+		return { order, stripeUrl }
 	},
 	async getOrderById(id: string) {
 		const order = await OrderRepository.findById(id)
