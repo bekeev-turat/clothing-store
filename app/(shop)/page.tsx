@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import { Suspense } from 'react'
 import { z } from 'zod'
@@ -31,13 +31,19 @@ export async function generateMetadata({
 
 	const canonical = page <= 1 ? `${baseUrl}/` : `${baseUrl}/?page=${page}`
 
-	return { alternates: { canonical } }
+	return {
+		title: 'Главная | Магазин BeUp',
+		alternates: { canonical },
+	}
 }
 
 export default async function Home({ searchParams }: Props) {
 	const rawParams = await searchParams
-	const validatedParams = catalogParamsSchema.parse(rawParams)
 	
+	if (!rawParams.gender) {
+		redirect('/?gender=female')
+	}
+	const validatedParams = catalogParamsSchema.parse(rawParams)
 
 	const [productsResponse, groupsResponse, brandsResponse] = await Promise.all([
 		fetchCatalogProductsAction(validatedParams),

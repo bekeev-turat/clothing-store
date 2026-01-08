@@ -1,13 +1,24 @@
 import Link from 'next/link'
-import { ShoppingBag } from 'lucide-react'
 import { ROUTE_MAP } from '@/shared/config/routes'
+import Image from 'next/image'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Пустая корзина | BeUp',
+}
 
 export default function EmptyCartPage() {
 	return (
 		<section className='min-h-[70vh] flex items-center justify-center px-4'>
 			<div className='max-w-md text-center space-y-6'>
 				<div className='flex justify-center'>
-					<ShoppingBag size={72} className='text-gray-400' />
+					<Image
+						src='/empty-cart.png'
+						width={200}
+						height={200}
+						alt='Cart empty image'
+						className='w-[200px] '
+					/>
 				</div>
 
 				<h1 className='text-3xl font-bold'>

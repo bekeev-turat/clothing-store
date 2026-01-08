@@ -1,5 +1,10 @@
 import { getProductGroupsWithCountAction } from '@/actions/groups.actions'
 import { GroupsHeader, GroupsGrid } from '@/features/admin/group/ui'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Админка просмотра групп',
+}
 
 export default async function AdminGroupsPage() {
 	const groups = await getProductGroupsWithCountAction()

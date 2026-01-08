@@ -1,8 +1,10 @@
 'use client'
 
-import Link from 'next/link'
-import { Button } from '@/shared/ui'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+
 import { useCheckout } from '@/features/checkout/hooks/use-checkout'
+
 import {
 	CheckoutHeader,
 	AddressSection,
@@ -10,22 +12,18 @@ import {
 	SummaryCard,
 } from '@/features/checkout/ui'
 
+import { Button } from '@/shared/ui'
+
 const CheckoutPage = () => {
+	const router = useRouter()
 	const { items, address, totals, isEmpty, onPlaceOrder, isPending } =
 		useCheckout()
 
-	if (isEmpty) {
-		return (
-			<div className='flex flex-col items-center justify-center min-h-[60vh] gap-4'>
-				<p className='text-xl font-medium text-muted-foreground'>
-					Корзина пуста
-				</p>
-				<Button asChild variant='outline'>
-					<Link href='/'>Вернуться</Link>
-				</Button>
-			</div>
-		)
-	}
+	useEffect(() => {
+		if (isEmpty) {
+			router.push('/empty')
+		}
+	}, [isEmpty, router])
 
 	return (
 		<div className='bg-background min-h-screen pb-20'>

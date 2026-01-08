@@ -1,5 +1,11 @@
 import Image from 'next/image'
 import { getProfileAction } from '@/actions/account.actions'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Личный кабинет | Магазин BeUp',
+	description: 'Управление вашими данными',
+}
 
 const ProfilePage = async () => {
 	const { data: user, error } = await getProfileAction()

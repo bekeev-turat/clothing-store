@@ -4,14 +4,15 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-import { useAppSelector } from '@/shared/store/hooks'
-
-import { CartItemsList } from '@/features/cart/ui/cart-items-list'
-import { useCartActions } from '@/features/cart/hooks/use-cart-actions'
-import { SummaryCard } from '@/features/checkout/ui'
 import { ROUTE_MAP } from '@/shared/config/routes'
 import { cn } from '@/shared/lib'
+
+import { useAppSelector } from '@/shared/store/hooks'
+import { useCartActions } from '@/features/cart/hooks/use-cart-actions'
 import { useCheckout } from '@/features/checkout/hooks/use-checkout'
+
+import { SummaryCard } from '@/features/checkout/ui'
+import { CartItemsList } from '@/features/cart/ui/cart-items-list'
 
 const CartPage = () => {
 	const router = useRouter()

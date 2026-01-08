@@ -2,6 +2,9 @@
 
 import { MapPin } from 'lucide-react'
 
+import { ROUTE_MAP } from '@/shared/config/routes'
+import { useAddressForm } from '@/features/address-form/hooks/use-address-form'
+
 import {
 	Card,
 	CardContent,
@@ -15,10 +18,6 @@ import {
 	AddressHeader,
 	AddressFormFields,
 } from '@/features/address-form/ui'
-
-import { useAddressForm } from '@/features/address-form/hooks/use-address-form'
-
-import { ROUTE_MAP } from '@/shared/config/routes'
 
 export default function AddressPage() {
 	const { form, onSubmit, errors } = useAddressForm()

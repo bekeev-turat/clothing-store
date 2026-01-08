@@ -5,6 +5,8 @@ import {
 } from '@/features/app-shell/config/admin-menu.config'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { getSession } from '@/domain/auth/get-session'
+import { AccountService } from '@/services/account.service'
 
 export const metadata: Metadata = {
 	title: {
@@ -18,7 +20,9 @@ export default async function AdminLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const admin = await prisma.account.findFirst({ where: { role: 'ADMIN' } })
+	const session = await getSession()
+
+	const admin = await AccountService.getCurrentAdmin(session?.user?.id)
 
 	return (
 		<div className='flex min-h-screen bg-gray-100'>

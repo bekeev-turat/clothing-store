@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { IoCardOutline } from 'react-icons/io5'
 import clsx from 'clsx'
 
-// import { OrderItemsList } from '@/features/order/ui/order-items-list'
+import { OrderItemsList } from '@/features/order/ui/order-items-list'
 import { OrderSummary } from '@/features/order/ui/order-summary'
 import { getOrderByIdAction } from '@/actions/order.actions'
 import { OrderStatus } from '@/prisma/generated/client'
@@ -61,11 +61,16 @@ export default async function OrderPage({ params }: Props) {
 						<span>{isPaid ? 'Оплачено' : `Статус: ${order.status}`}</span>
 					</div>
 
-					{/* <OrderItemsList items={order.items} /> */}
+					<OrderItemsList items={order.items} />
 				</div>
 
 				<div className='flex flex-col gap-6'>
-					<OrderSummary address={address} totals={totals} isPaid={isPaid} userId={order.userId} />
+					<OrderSummary
+						address={address}
+						totals={totals}
+						isPaid={isPaid}
+						userId={order.userId}
+					/>
 				</div>
 			</div>
 		</section>

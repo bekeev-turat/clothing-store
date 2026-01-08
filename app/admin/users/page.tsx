@@ -2,12 +2,17 @@ import { getUsersAction } from '@/actions/account.actions'
 import { getSession } from '@/domain/auth/get-session'
 import { UsersTable, UsersToolbar } from '@/features/admin/user/ui'
 import { UsersHeader } from '@/features/admin/user/ui/users-header'
-import { UserFilters } from '@/shared/lib/zod/account.schema'
+import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Админка просмотра пользователей',
+}
 
 export default async function AdminUsersPage({
 	searchParams,
 }: {
-	searchParams: UserFilters
+	searchParams: TUserFiltersSchema
 }) {
 	const params = await searchParams
 	const session = await getSession()

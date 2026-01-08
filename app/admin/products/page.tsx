@@ -6,6 +6,11 @@ import {
 	ProductsToolbar,
 } from '@/features/admin/product/ui'
 import { Pagination } from '@/shared/ui'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+	title: 'Админка просмотра товаров',
+}
 
 export default async function AdminProductsPage({
 	searchParams,
