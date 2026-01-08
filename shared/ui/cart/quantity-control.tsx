@@ -14,38 +14,22 @@ export const QuantityControl = ({
 	onChange,
 	min = 1,
 	max,
-}: QuantityControlProps) => {
-	const decrease = () => {
-		if (value <= min) return
-		onChange(value - 1)
-	}
-
-	const increase = () => {
-		if (max && value >= max) return
-		onChange(value + 1)
-	}
-
-	return (
-		<div className='inline-flex items-center border rounded-lg overflow-hidden'>
-			<button
-				type='button'
-				onClick={decrease}
-				className='px-3 py-2 hover:bg-gray-100 transition'
-				aria-label='Decrease quantity'
-			>
-				<Minus size={16} />
-			</button>
-
-			<span className='px-4 text-sm font-medium select-none'>{value}</span>
-
-			<button
-				type='button'
-				onClick={increase}
-				className='px-3 py-2 hover:bg-gray-100 transition'
-				aria-label='Increase quantity'
-			>
-				<Plus size={16} />
-			</button>
-		</div>
-	)
-}
+}: QuantityControlProps) => (
+	<div className='flex items-center h-10 border border-input rounded-md bg-background'>
+		<button
+			onClick={() => value > min && onChange(value - 1)}
+			className='h-full px-3 text-muted-foreground hover:text-foreground transition-colors'
+		>
+			<Minus size={14} />
+		</button>
+		<span className='w-8 text-center text-sm font-medium tabular-nums'>
+			{value}
+		</span>
+		<button
+			onClick={() => (!max || value < max) && onChange(value + 1)}
+			className='h-full px-3 text-muted-foreground hover:text-foreground transition-colors'
+		>
+			<Plus size={14} />
+		</button>
+	</div>
+)

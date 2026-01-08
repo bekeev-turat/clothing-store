@@ -10,6 +10,8 @@ import { QuantityControl } from '@/shared/ui/cart/quantity-control'
 import { useAppDispatch } from '@/shared/store/hooks'
 import { addItem } from '@/features/cart/store/cart.slice'
 import toast from 'react-hot-toast'
+import { Button } from '@/shared/ui'
+import { ShoppingCart } from 'lucide-react'
 
 interface Props {
 	product: ProductWithVariants
@@ -56,21 +58,27 @@ const AddToCard = ({
 	}
 
 	return (
-		<div className='flex flex-col gap-4'>
+		<div className='flex flex-col gap-4 py-4 border-t border-b border-border/50'>
+			<div className='flex items-center justify-between'>
+				<span className='text-sm font-medium'>Количество</span>
+				<QuantityControl value={quantity} onChange={setQuantity} />
+			</div>
+
 			{posted && !selectedSize && (
-				<span className='text-red-600 font-bold text-sm'>
-					Вы должны выбрать размер!
-				</span>
+				<p className='text-destructive text-xs font-semibold animate-bounce'>
+					Пожалуйста, выберите размер перед добавлением
+				</p>
 			)}
 
-			<QuantityControl value={quantity} onChange={setQuantity} />
-
-			<button
-				className='btn-primary w-full py-3 bg-black text-white rounded-md disabled:bg-gray-400'
+			<Button
+				size='lg'
+				className='w-full text-base font-semibold h-12 shadow-lg transition-transform hover:scale-[1.01]'
 				onClick={onAddToCard}
+				disabled={!product.variants[variantIndex].stock} // пример проверки
 			>
+				<ShoppingCart className='mr-2 h-5 w-5' />
 				Добавить в корзину
-			</button>
+			</Button>
 		</div>
 	)
 }

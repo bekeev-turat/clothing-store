@@ -54,7 +54,7 @@ export function ProductGalleryDesktop({ images, title, className }: Props) {
 	return (
 		<div className={cn('flex gap-4 h-[760px]', className)}>
 			{/* Миниатюры (thumbs) */}
-			<div ref={thumbsRef} className='w-36 overflow-hidden'>
+			<div ref={thumbsRef} className='w-36'>
 				{' '}
 				{/* ИСПРАВЛЕНО: было mainRef */}
 				<div className='flex flex-col gap-3'>
@@ -63,7 +63,7 @@ export function ProductGalleryDesktop({ images, title, className }: Props) {
 							key={img}
 							onClick={() => scrollTo(i)}
 							className={cn(
-								'relative aspect-square w-30 rounded-xl overflow-hidden border transition',
+								'relative aspect-square w-30 rounded-xl overflow-hidden border border-box transition',
 								selectedIndex === i ? 'border-primary' : 'border-transparent',
 							)}
 						>

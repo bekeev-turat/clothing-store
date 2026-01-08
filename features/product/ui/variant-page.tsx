@@ -32,54 +32,56 @@ export const VariantPage = ({ product }: { product: ProductWithVariants }) => {
 		setSelectedSize(undefined)
 	}
 	return (
-		<div className='mt-6 mb-20 grid gap-6 lg:grid-cols-3 max-w-7xl mx-auto'>
-			<div className='md:col-span-2'>
-				<ProductGallery
-					title={product.name}
-					images={currentVariant.images.map((img) => img.url)}
-				/>
-			</div>
+		<div className='mt-8 mb-20 px-4 max-w-7xl mx-auto'>
+			<div className='grid gap-8 lg:grid-cols-12'>
+				{/* Галерея: 7 колонок */}
+				<div className='lg:col-span-7'>
+					<ProductGallery
+						title={product.name}
+						images={currentVariant.images.map((img) => img.url)}
+					/>
+				</div>
 
-			<div className='px-5 space-y-6'>
-				<ProductHeader name={product.name} price={product.price} />
-				<ColorSelector
-					variants={colorVariants}
-					currentIndex={variantIndex}
-					onChange={handleVariantChange}
-				/>
+				{/* Контент: 5 колонок */}
+				<div className='lg:col-span-5 space-y-8 lg:sticky lg:top-24 h-fit'>
+					<ProductHeader name={product.name} price={product.price} />
 
-				<SizeSelector
-					availableSizes={currentVariant.availableSizes}
-					stock={currentVariant.stock as Record<ItemSize, number>}
-					selectedSize={selectedSize}
-					onSelect={updateSize}
-				/>
+					<ColorSelector
+						variants={colorVariants}
+						currentIndex={variantIndex}
+						onChange={handleVariantChange}
+					/>
 
-				<AddToCard
-					product={product}
-					variantIndex={variantIndex}
-					selectedVariantId={currentVariant.id}
-					selectedSize={selectedSize}
-					onSuccess={() => setSelectedSize(undefined)}
-				/>
+					<SizeSelector
+						availableSizes={currentVariant.availableSizes}
+						stock={currentVariant.stock as Record<ItemSize, number>}
+						selectedSize={selectedSize}
+						onSelect={updateSize}
+					/>
 
-				<ProductInfo
-					description={product.description}
-					properties={[
-						{ label: 'Бренд', value: product.brand || '' },
-						{ label: 'Цвет', value: currentVariant.color },
-						{ label: 'Состав', value: product.composition?.join(', ') || '' },
-						{ label: 'Артикул', value: product.code || '' },
-					]}
-				/>
+					<AddToCard
+						product={product}
+						variantIndex={variantIndex}
+						selectedVariantId={currentVariant.id}
+						selectedSize={selectedSize}
+						onSuccess={() => setSelectedSize(undefined)}
+					/>
+
+					{/* Характеристики через Аккордеон */}
+					<ProductInfo product={product} color={currentVariant.color} />
+				</div>
 			</div>
 		</div>
 	)
 }
 
 const ProductHeader = ({ name, price }: { name: string; price: number }) => (
-	<div>
-		<h1 className='text-lg font-semibold'>{name}</h1>
-		<p className='mt-2 text-xl font-medium'>{price.toLocaleString()} сом</p>
+	<div className='space-y-2'>
+		<h1 className='text-3xl font-bold tracking-tight'>{name}</h1>
+		<div className='flex items-center gap-3'>
+			<span className='text-2xl font-bold text-primary'>
+				{price.toLocaleString()} сом
+			</span>
+		</div>
 	</div>
 )

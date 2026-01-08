@@ -20,8 +20,8 @@ export const ROUTE_MAP = {
 	auth: {
 		login: '/auth/login',
 		register: '/auth/register',
-		resetName: 'auth/reset-name',
-		resetPassword: 'auth/reset-password',
+		resetName: '/auth/reset-name',
+		resetPassword: '/auth/reset-password',
 	},
 
 	orders: {

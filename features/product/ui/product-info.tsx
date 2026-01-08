@@ -1,60 +1,49 @@
-interface Property {
-	label: string
-	value: string
-}
+import { ProductWithVariants } from '@/domain/product/types'
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/shared/ui'
 
 interface ProductInfoProps {
-	description: string
-	properties: Property[]
+	product: ProductWithVariants
+	color: string
 }
 
-export const ProductInfo = ({ description, properties }: ProductInfoProps) => {
+export const ProductInfo = ({ product, color }: ProductInfoProps) => {
 	return (
-		<div className='space-y-8 border-t pt-6'>
-			<section className='space-y-2'>
-				<h3 className='font-semibold text-sm uppercase tracking-wider'>
+		<Accordion type='single' collapsible className='w-full'>
+			<AccordionItem value='description'>
+				<AccordionTrigger className='text-sm font-semibold'>
 					Описание
-				</h3>
-				<p className='text-sm text-gray-600 leading-relaxed'>{description}</p>
-			</section>
-
-			<section className='space-y-3'>
-				<h3 className='font-semibold text-sm uppercase tracking-wider'>
+				</AccordionTrigger>
+				<AccordionContent className='leading-relaxed text-muted-foreground'>
+					{product.description}
+				</AccordionContent>
+			</AccordionItem>
+			<AccordionItem value='details'>
+				<AccordionTrigger className='text-sm font-semibold'>
 					Характеристики
-				</h3>
-				<div className='grid gap-y-2'>
-					{properties.map((prop) => (
-						<PropertyRow key={prop.label} {...prop} />
-					))}
-				</div>
-			</section>
-
-			<section className='grid gap-4 pt-4 border-t text-xs text-muted-foreground'>
-				<div className='flex gap-2'>
-					<span className='font-medium text-black'>Доставка:</span>
-					<span>Бесплатная доставка при заказе от 30 000 сом</span>
-				</div>
-				<div className='flex gap-2'>
-					<span className='font-medium text-black'>Возврат:</span>
-					<span>Возврат в течение 14 дней в оригинальной упаковке</span>
-				</div>
-			</section>
-		</div>
-	)
-}
-
-/**
- * Выделенный компонент для строки характеристики (DIP - зависим от абстракции Property)
- */
-const PropertyRow = ({ label, value }: Property) => {
-	if (!value) return null
-
-	return (
-		<div className='flex justify-between items-baseline border-b border-dashed border-gray-200 pb-1 text-sm'>
-			<span className='text-muted-foreground bg-white pr-2'>{label}</span>
-			<span className='text-right font-medium pl-2 bg-white text-gray-900'>
-				{value}
-			</span>
-		</div>
+				</AccordionTrigger>
+				<AccordionContent>
+					<dl className='space-y-2'>
+						{[
+							{ label: 'Бренд', value: product.brand },
+							{ label: 'Цвет', value: color },
+							{ label: 'Состав', value: product.composition?.join(', ') },
+							{ label: 'Артикул', value: product.code },
+						].map((item) => (
+							<div key={item.label} className='flex justify-between text-sm'>
+								<dt className='text-muted-foreground'>{item.label}</dt>
+								<dd className='font-medium text-foreground'>
+									{item.value || '—'}
+								</dd>
+							</div>
+						))}
+					</dl>
+				</AccordionContent>
+			</AccordionItem>
+		</Accordion>
 	)
 }

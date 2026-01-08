@@ -20,9 +20,9 @@ export const ColorSelector = ({
 }: ColorSelectorProps) => {
 	return (
 		<div className='space-y-3'>
-			<div className='flex items-center justify-between'>
-				<span className='text-sm font-medium'>Цвет:</span>
-				<span className='text-sm text-muted-foreground'>
+			<div className='flex items-center justify-between text-sm leading-none'>
+				<span className='font-medium'>Цвет</span>
+				<span className='text-muted-foreground'>
 					{variants[currentIndex]?.color}
 				</span>
 			</div>
@@ -37,8 +37,13 @@ export const ColorSelector = ({
 							type='button'
 							onClick={() => onChange(index)}
 							className={cn(
-								'relative h-22 w-16 overflow-hidden rounded-md border-2 transition-all hover:opacity-80',
-								isActive ? 'border-black' : 'border-transparent',
+								// Базовые стили в стиле shadcn
+								'relative h-20 w-16 overflow-hidden rounded-md border border-input bg-background transition-all',
+								'hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+								// Стили активного состояния
+								isActive
+									? 'ring-2 ring-primary ring-offset-2 border-transparent'
+									: 'hover:border-muted-foreground/50',
 							)}
 							title={variant.color}
 						>
@@ -46,7 +51,7 @@ export const ColorSelector = ({
 								src={variant.imageUrl}
 								alt={variant.color}
 								fill
-								sizes='100px'
+								sizes='(max-width: 768px) 64px, 80px'
 								className='object-cover'
 							/>
 						</button>
