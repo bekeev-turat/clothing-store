@@ -1,10 +1,10 @@
 import prisma from '@/lib/prisma'
 import { Account } from '@/prisma/generated/client'
 import { UserRole } from '@/prisma/generated/enums'
-import { UserFilters } from '@/shared/lib/zod/account.schema'
+import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
 
 export const userRepository = {
-	async findAll(filters: UserFilters): Promise<Account[]> {
+	async findAll(filters: TUserFiltersSchema): Promise<Account[]> {
 		return prisma.account.findMany({
 			where: {
 				AND: [

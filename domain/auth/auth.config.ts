@@ -1,5 +1,3 @@
-// todo понять что тут творится и смогу ли  я намипасть ее упросщенную версию
-
 import prisma from '@/lib/prisma'
 import type { NextAuthOptions, DefaultSession } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'

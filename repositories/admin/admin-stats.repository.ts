@@ -1,4 +1,5 @@
 import prisma from '@/lib/prisma'
+import { OrderStatus } from '@/prisma/generated/enums'
 
 export class AdminStatsRepository {
 	static async getCounts() {
@@ -13,7 +14,10 @@ export class AdminStatsRepository {
 
 	static async getMonthlyOrdersTotal(from: Date) {
 		const orders = await prisma.order.findMany({
-			where: { createdAt: { gte: from } },
+			where: {
+				createdAt: { gte: from },
+				status: 'PAID' as OrderStatus,
+			},
 			select: { totalAmount: true },
 		})
 

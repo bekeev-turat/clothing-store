@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 import { Prisma, UserRole } from '@/prisma/generated/client'
-import { UserFilters } from '@/shared/lib/zod/account.schema'
+import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
 
 export const AccountRepository = {
 	async findById(id: string) {
@@ -11,7 +11,7 @@ export const AccountRepository = {
 		return prisma.account.findUnique({ where: { email } })
 	},
 
-	async findAll(filters: UserFilters) {
+	async findAll(filters: TUserFiltersSchema) {
 		const skip = (filters.page - 1) * filters.limit
 
 		return prisma.account.findMany({
@@ -28,14 +28,14 @@ export const AccountRepository = {
 			take: filters.limit,
 		})
 	},
-	async count(filters: UserFilters) {
+	async count(filters: TUserFiltersSchema) {
 		return prisma.account.count({
 			where: {
 				AND: [
 					filters.query
 						? { username: { contains: filters.query, mode: 'insensitive' } }
 						: {},
-					filters.role !== 'ALL' ? { role: filters.role as any } : {},
+					filters.role !== 'ALL' ? { role: filters.role as UserRole } : {},
 				],
 			},
 		})
