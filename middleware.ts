@@ -1,4 +1,3 @@
-// todo научится делать middlewere
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 import { Account } from './prisma/generated/client'
