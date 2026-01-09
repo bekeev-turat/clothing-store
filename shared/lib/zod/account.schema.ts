@@ -1,3 +1,4 @@
+import { UserRole } from '@/prisma/generated/enums'
 import { z } from 'zod'
 /**
  *  Схема для обновления профиля
@@ -20,17 +21,25 @@ export const UpdateProfileSchema = z.object({
  * Схема для смены роли (админка)
  **/
 export const ChangeRoleSchema = z.object({
-	targetUserId: z.string().uuid('Некорректный ID пользователя'),
-	role: z.enum(['ADMIN', 'MEMBER', 'MODERATOR']),
-})
+	userId: z.string().min(1, 'ID пользователя обязателен'),
 
+	role: z.nativeEnum(UserRole, {
+		message: 'Выбрана недопустимая роль',
+	}),
+})
 /*
- * Схема для регистрации (если планируете делать кастомную)
+ * Схема для регистрации
  **/
 export const RegisterSchema = z.object({
 	email: z.string().email('Некорректный формат email'),
 	username: z.string().min(3, 'Имя обязательно'),
 	password: z.string().min(6, 'Минимум 6 символов'),
+})
+/*
+ * Схема для удаления пользователя
+ **/
+export const DeleteUserSchema = z.object({
+	userId: z.string().min(1, 'ID пользователя обязателен'),
 })
 
 export const UserFiltersSchema = z.object({
@@ -42,6 +51,9 @@ export const UserFiltersSchema = z.object({
 	sortOrder: z.enum(['asc', 'desc']).default('desc'),
 })
 
+// Тип, который можно использовать в коде
+
+export type TDeleteUserSchema = z.infer<typeof DeleteUserSchema>
 export type TChangeRoleSchema = z.infer<typeof ChangeRoleSchema>
 export type TUpdateProfileSchema = z.infer<typeof UpdateProfileSchema>
 export type TRegisterSchema = z.infer<typeof RegisterSchema>
