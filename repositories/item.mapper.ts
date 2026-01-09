@@ -1,4 +1,3 @@
-import { ItemSize } from '@prisma/client'
 import type {
 	PrismaProductCatalog,
 	PrismaProductItem,
@@ -7,6 +6,7 @@ import type {
 	TransformedProduct,
 	TransformedProductCatalog,
 } from '@/domain/product/types'
+import { ItemSize } from '@/prisma/generated/enums'
 
 export const mapItemToList = (
 	item: PrismaProductList,

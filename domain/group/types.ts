@@ -1,9 +1,9 @@
-import { Prisma } from '@prisma/client'
 import {
 	GROUP_SELECT,
 	GROUP_WITH_COUNT_SELECT,
 } from '@/repositories/group/group.select'
 import { ItemGender } from '@/prisma/generated/enums'
+import { Prisma } from '@/prisma/generated/client'
 
 export type PrismaGroup = Prisma.GroupGetPayload<{
 	select: typeof GROUP_SELECT

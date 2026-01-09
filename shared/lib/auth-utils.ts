@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authConfig } from '@/domain/auth/auth.config'
-import { UserRole } from '@prisma/client'
+import { UserRole } from '@/prisma/generated/enums'
 
 // Универсальная функция для получения сессии или выброса ошибки
 export async function getSessionOrThrow() {
