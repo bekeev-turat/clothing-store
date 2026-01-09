@@ -5,7 +5,6 @@ export const CATALOG_ITEM_SELECT = {
 	name: true,
 	price: true,
 	brand: true,
-	gender: true,
 	slug: true,
 	tags: true,
 	variants: {
@@ -24,8 +23,8 @@ export const CATALOG_ITEM_SELECT = {
 export const PRODUCT_LIST_SELECT = {
 	id: true,
 	name: true,
-	price: true,
 	slug: true,
+	price: true,
 	gender: true,
 	brand: true,
 	group: {

@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { Order, OrderStatus, Prisma } from '@/prisma/generated/client'
+import { OrderStatus, Prisma } from '@/prisma/generated/client'
 
 type TxClient = Prisma.TransactionClient | typeof prisma
 

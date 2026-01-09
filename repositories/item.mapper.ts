@@ -1,16 +1,16 @@
 import { ItemSize } from '@prisma/client'
-import {
-	CatalogItem,
-	PrismaCatalogItem,
+import type {
+	PrismaProductCatalog,
 	PrismaProductItem,
-	PrismaProductListItem,
-	ProductListItem,
-	ProductWithVariants,
+	PrismaProductList,
+	TransformedProductList,
+	TransformedProduct,
+	TransformedProductCatalog,
 } from '@/domain/product/types'
 
 export const mapItemToList = (
-	item: PrismaProductListItem,
-): ProductListItem => ({
+	item: PrismaProductList,
+): TransformedProductList => ({
 	id: item.id,
 	name: item.name,
 	slug: item.slug,
@@ -25,7 +25,9 @@ export const mapItemToList = (
 	})),
 })
 
-export const mapItemToCatalog = (item: PrismaCatalogItem): CatalogItem => ({
+export const mapItemToCatalog = (
+	item: PrismaProductCatalog,
+): TransformedProductCatalog => ({
 	id: item.id,
 	name: item.name,
 	price: item.price,
@@ -51,30 +53,20 @@ const emptyStock: Record<ItemSize, number> = {
 	XXXL: 0,
 }
 
-export const mapItemToFull = (
-	item: PrismaProductItem,
-): ProductWithVariants => ({
-	id: item.id,
-	name: item.name,
-	description: item.description,
-	brand: item.brand,
-	slug: item.slug,
-	price: item.price,
-	tags: item.tags,
-	composition: item.composition,
-	code: item.code,
-	modelSize: item.modelSize,
-	variants: item.variants.map((v) => ({
-		id: v.id,
-		color: v.color,
-		availableSizes: v.availableSizes,
-		images: v.images,
-		stock: v.stock.reduce<Record<ItemSize, number>>(
-			(acc, s) => {
-				acc[s.size] = s.quantity
-				return acc
-			},
-			{ ...emptyStock },
-		),
-	})),
-})
+export const mapItemToFull = (item: PrismaProductItem): TransformedProduct => {
+	const { variants, ...rest } = item 
+
+	return {
+		...rest, 
+		variants: variants.map((v) => ({
+			...v,
+			stock: v.stock.reduce<Record<ItemSize, number>>(
+				(acc, s) => {
+					acc[s.size] = s.quantity
+					return acc
+				},
+				{ ...emptyStock },
+			),
+		})),
+	}
+}

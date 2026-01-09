@@ -1,9 +1,9 @@
 import prisma from '@/lib/prisma'
 import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
-import {
-	CatalogItem,
-	ProductListItem,
-	ProductWithVariants,
+import type {
+	TransformedProductCatalog,
+	TransformedProductList,
+	TransformedProduct,
 } from '@/domain/product/types'
 import { buildItemWhere } from './item.where'
 import { mapItemToCatalog, mapItemToFull, mapItemToList } from './item.mapper'
@@ -22,7 +22,7 @@ export const itemRepository = {
 		skip: number
 		take: number
 		filters: CatalogParams
-	}): Promise<ProductListItem[]> {
+	}): Promise<TransformedProductList[]> {
 		const items = await prisma.item.findMany({
 			where: buildItemWhere(filters),
 			skip,
@@ -42,7 +42,7 @@ export const itemRepository = {
 		skip: number
 		take: number
 		filters: CatalogParams
-	}): Promise<CatalogItem[]> {
+	}): Promise<TransformedProductCatalog[]> {
 		const items = await prisma.item.findMany({
 			where: buildItemWhere(filters),
 			skip,
@@ -59,7 +59,7 @@ export const itemRepository = {
 		})
 	},
 
-	async findBySlug(slug: string): Promise<ProductWithVariants | null> {
+	async findBySlug(slug: string): Promise<TransformedProduct | null> {
 		const item = await prisma.item.findUnique({
 			where: { slug },
 			select: PRODUCT_ITEM_SELECT,
