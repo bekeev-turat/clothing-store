@@ -42,9 +42,3 @@ export const ROUTE_MAP = {
 		users: '/admin/users',
 	},
 } as const
-
-// category: {
-// 	men: '/category/men',
-// 	women: '/category/women',
-// 	kids: '/category/kids',
-// },

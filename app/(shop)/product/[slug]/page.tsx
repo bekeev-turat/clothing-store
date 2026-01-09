@@ -1,5 +1,7 @@
 import { getProductBySlugAction } from '@/actions/product-by-slug.action'
 import { VariantPage } from '@/features/product/ui/variant-page'
+import { LoadingPage } from '@/shared/ui/loading'
+import { Skeleton } from '@/shared/ui/skeleton'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -8,11 +10,11 @@ export async function generateMetadata({
 	params: Promise<{ slug: string }>
 }): Promise<Metadata> {
 	const { slug } = await params
-	const product = await getProductBySlugAction(slug)
+	const { data } = await getProductBySlugAction(slug)
 
 	return {
 		title: `Купить ${slug} | Магазин BeUp`,
-		description: product.description,
+		description: data?.description,
 	}
 }
 
@@ -22,8 +24,9 @@ export default async function ProductPage({
 	params: Promise<{ slug: string }>
 }) {
 	const { slug } = await params
-
-	const product = await getProductBySlugAction(slug)
-
-	return <VariantPage product={product} />
+	const { data } = await getProductBySlugAction(slug)
+	if (!data) {
+		return <LoadingPage />
+	}
+	return <VariantPage product={data} />
 }

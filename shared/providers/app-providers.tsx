@@ -18,14 +18,12 @@ export const AppProviders = ({ children }: Props) => {
 				position='top-center'
 				reverseOrder={false}
 				toastOptions={{
-					// Общие стили для всех типов уведомлений
 					style: {
-						fontSize: '20px', // Размер текста
-						padding: '24px', // Внутренние отступы
-						maxWidth: '600px', // Максимальная ширина
-						borderRadius: '12px', // Скругление
+						fontSize: '20px',
+						padding: '24px',
+						maxWidth: '600px',
+						borderRadius: '12px',
 					},
-					// Можно настроить размеры иконок
 					success: {
 						iconTheme: {
 							primary: '#4ade80',
