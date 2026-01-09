@@ -23,7 +23,7 @@ export default async function AdminProductsPage({
 }) {
 	const params = await searchParams
 
-	const [{ data, meta }, groups] = await Promise.all([
+	const [{ data, meta }, { data: groups }] = await Promise.all([
 		getAdminProductsAction({
 			search: params.query,
 			groupSlug: params.groupSlug,
@@ -36,7 +36,7 @@ export default async function AdminProductsPage({
 	return (
 		<div className='space-y-6'>
 			<ProductsHeader count={meta.totalItems} />
-			<ProductsToolbar groups={groups} />
+			{groups && groups.length > 0 && <ProductsToolbar groups={groups} />}
 			<ProductsTable products={data} />
 
 			<Pagination currentPage={meta.currentPage} totalPages={meta.totalPages} />

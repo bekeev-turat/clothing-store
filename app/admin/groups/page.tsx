@@ -1,5 +1,6 @@
 import { getProductGroupsWithCountAction } from '@/actions/groups.actions'
 import { GroupsHeader, GroupsGrid } from '@/features/admin/group/ui'
+import { LoadingPage } from '@/shared/ui/loading'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -7,7 +8,10 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminGroupsPage() {
-	const groups = await getProductGroupsWithCountAction()
+	const { data: groups } = await getProductGroupsWithCountAction()
+	if (!groups) {
+		return <LoadingPage />
+	}
 
 	return (
 		<div className='space-y-6'>

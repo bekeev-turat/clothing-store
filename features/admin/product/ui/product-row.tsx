@@ -3,10 +3,10 @@
 import Link from 'next/link'
 import { Edit, Trash2 } from 'lucide-react'
 import { ROUTE_MAP } from '@/shared/config/routes'
-import { ProductListItem } from '@/domain/product/types'
+import type { TransformedProductList } from '@/domain/product/types'
 
 interface ProductRowProps {
-	product: ProductListItem
+	product: TransformedProductList
 }
 
 export const ProductRow = ({ product }: ProductRowProps) => {

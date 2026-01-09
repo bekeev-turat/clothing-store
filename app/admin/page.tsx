@@ -3,8 +3,7 @@ import { AdminPageHeader } from '@/shared/ui/admin/admin-header'
 import { StatCard } from '@/shared/ui/admin/stat-card'
 
 export default async function AdminPage() {
-	const stats = await getAdminStats()
-
+	const { data: stats } = await getAdminStats()
 	return (
 		<div className='space-y-6'>
 			<AdminPageHeader

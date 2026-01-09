@@ -1,6 +1,6 @@
 import { DataTable } from '@/shared/ui/data-table'
 import { ProductRow } from './product-row'
-import { ProductListItem } from '@/domain/product/types'
+import type { TransformedProductList } from '@/domain/product/types'
 
 const COLUMNS = [
 	{ header: 'Товар', key: 'name' },
@@ -14,7 +14,7 @@ const COLUMNS = [
 export const ProductsTable = ({
 	products,
 }: {
-	products: ProductListItem[]
+	products: TransformedProductList[]
 }) => (
 	<DataTable
 		items={products}
