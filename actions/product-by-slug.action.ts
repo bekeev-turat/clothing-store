@@ -1,11 +1,21 @@
+'use server'
+
 import { itemService } from '@/services/item.service'
+import { z } from 'zod'
 
 export const getProductBySlugAction = async (slug: string) => {
-	const item = await itemService.getItemBySlug(slug)
+	try {
+		const validatedSlug = z.string().min(1).parse(slug)
 
-	if (!item) {
-		throw new Error('Продукт не найден')
+		const item = await itemService.getItemBySlug(validatedSlug)
+
+		if (!item) {
+			return { error: 'Продукт не найден', data: null }
+		}
+
+		return { data: item, error: null }
+	} catch (error) {
+		console.error('[GET_PRODUCT_BY_SLUG_ERROR]:', error)
+		return { error: 'Ошибка при загрузке продукта', data: null }
 	}
-
-	return item
 }

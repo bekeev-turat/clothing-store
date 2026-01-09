@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { CreateOrderSchema } from '../shared/lib/zod/order.schema'
+import { CreateOrderSchema } from '../features/order/ui/order.schema'
 import { ROUTE_MAP } from '@/shared/config/routes'
 import { orderService } from '@/services/order.service'
 import { OrderStatus } from '@/prisma/generated/enums'
@@ -28,7 +28,7 @@ export async function createOrderAction(rawData: unknown) {
 				product_data: {
 					name: `Заказ #${order.id}`,
 				},
-				unit_amount: Math.round(item.price * 100), // Stripe принимает в центах
+				unit_amount: Math.round(item.price * 100),
 			},
 			quantity: item.quantity,
 		}))
@@ -106,8 +106,6 @@ export async function getOrdersByUserAction(): Promise<ActionResult<IOrder[]>> {
 		const orders = await orderService.getOrderByUserId(session.user.id)
 		return { success: true, data: orders }
 	} catch {
-		// const message = e instanceof Error ? e.message : 'Что-то пошло не так'
-
 		return { success: false, message: 'Не удалось получить заказы' }
 	}
 }
