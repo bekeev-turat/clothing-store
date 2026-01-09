@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { ProductWithVariants } from '@/domain/product/types'
+import { TransformedProduct } from '@/domain/product/types'
 import { ItemSize } from '@/prisma/generated/enums'
 
-export const useProductVariant = (product: ProductWithVariants) => {
+export const useProductVariant = (product: TransformedProduct) => {
 	const [variantIndex, setVariantIndex] = useState(0)
 	const [selectedSize, setSelectedSize] = useState<ItemSize | undefined>()
 

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import type { ItemSize } from '@/prisma/generated/enums'
-import type { ProductWithVariants } from '@/domain/product/types'
+import type { TransformedProduct } from '@/domain/product/types'
 
 import { QuantityControl } from '@/shared/ui/cart/quantity-control'
 
@@ -14,7 +14,7 @@ import { Button } from '@/shared/ui'
 import { ShoppingCart } from 'lucide-react'
 
 interface Props {
-	product: ProductWithVariants
+	product: TransformedProduct
 	selectedVariantId: string
 	selectedSize: ItemSize | undefined
 	variantIndex: number

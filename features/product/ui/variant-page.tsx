@@ -1,7 +1,7 @@
 'use client'
 
 import type { ItemSize } from '@/prisma/generated/client'
-import type { ProductWithVariants } from '@/domain/product/types'
+import type { TransformedProduct } from '@/domain/product/types'
 
 import { useProductVariant } from '@/shared/hooks/use-product-variant'
 
@@ -11,7 +11,7 @@ import AddToCard from './add-to-card'
 import { ProductInfo } from './product-info'
 import { ColorSelector } from './color-selector'
 
-export const VariantPage = ({ product }: { product: ProductWithVariants }) => {
+export const VariantPage = ({ product }: { product: TransformedProduct }) => {
 	const {
 		currentVariant,
 		variantIndex,

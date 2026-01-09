@@ -1,5 +1,5 @@
 import type { GenderDTO } from '@/shared/lib/zod/gender.schema'
-import type { CatalogItem } from '@/domain/product/types'
+import type { TransformedProductCatalog } from '@/domain/product/types'
 import type { GroupWithCountDTO } from '@/shared/lib/zod/groups.schema'
 
 import { GenderToggle } from './gender-toggle'
@@ -13,7 +13,7 @@ export function CatalogContent({
 	currentGender,
 }: {
 	brands: string[] | null | undefined
-	data: CatalogItem[]
+	data: TransformedProductCatalog[]
 	groups: GroupWithCountDTO[]
 	currentGender: GenderDTO
 }) {

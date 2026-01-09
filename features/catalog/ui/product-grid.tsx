@@ -1,7 +1,7 @@
 import { ProductCard } from './product-card'
-import { CatalogItem } from '@/domain/product/types'
+import { TransformedProductCatalog } from '@/domain/product/types'
 
-export function ProductGrid({ items }: { items: CatalogItem[] }) {
+export function ProductGrid({ items }: { items: TransformedProductCatalog[] }) {
 	return (
 		<div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
 			{items.map((item) => (

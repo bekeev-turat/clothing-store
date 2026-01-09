@@ -1,4 +1,4 @@
-import { ProductWithVariants } from '@/domain/product/types'
+import { TransformedProduct } from '@/domain/product/types'
 import {
 	Accordion,
 	AccordionContent,
@@ -7,7 +7,7 @@ import {
 } from '@/shared/ui'
 
 interface ProductInfoProps {
-	product: ProductWithVariants
+	product: TransformedProduct
 	color: string
 }
 

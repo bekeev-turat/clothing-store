@@ -4,10 +4,10 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ROUTE_MAP } from '@/shared/config/routes'
-import { CatalogItem } from '@/domain/product/types'
+import { TransformedProductCatalog } from '@/domain/product/types'
 import { Badge } from '@/shared/ui'
 
-export function ProductCard({ item }: { item: CatalogItem }) {
+export function ProductCard({ item }: { item: TransformedProductCatalog }) {
 	const images = item?.variant?.images ?? []
 	const [displayImage, setDisplayImage] = useState(images[0])
 
