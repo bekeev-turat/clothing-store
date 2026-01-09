@@ -1,17 +1,17 @@
 import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
 import { buildPagination } from '@/domain/catalog/pagination'
-import { PaginatedResponse } from '@/domain/common/paginated-response'
-import {
-	CatalogItem,
-	ProductListItem,
-	ProductWithVariants,
+import type { PaginatedResponse } from '@/domain/common/paginated-response'
+import type {
+	TransformedProductCatalog,
+	TransformedProductList,
+	TransformedProduct,
 } from '@/domain/product/types'
 import { itemRepository } from '@/repositories/item.repository'
 
 export const itemService = {
 	async search(
 		filters: CatalogParams,
-	): Promise<PaginatedResponse<CatalogItem>> {
+	): Promise<PaginatedResponse<TransformedProductCatalog>> {
 		const pagination = buildPagination(filters.pageIndex, filters.pageSize)
 
 		const [items, total] = await Promise.all([
@@ -39,7 +39,7 @@ export const itemService = {
 	},
 	async searchForAdmin(
 		filters: CatalogParams,
-	): Promise<PaginatedResponse<ProductListItem>> {
+	): Promise<PaginatedResponse<TransformedProductList>> {
 		const pagination = buildPagination(filters.pageIndex, filters.pageSize)
 
 		const [items, total] = await Promise.all([
@@ -65,7 +65,7 @@ export const itemService = {
 			},
 		}
 	},
-	async getItemBySlug(slug: string): Promise<ProductWithVariants | null> {
+	async getItemBySlug(slug: string): Promise<TransformedProduct | null> {
 		const item = await itemRepository.findBySlug(slug)
 
 		if (!item) return null

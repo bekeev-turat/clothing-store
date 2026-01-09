@@ -10,7 +10,6 @@ export const AccountService = {
 		const user = await AccountRepository.findById(id)
 		if (!user) throw new Error('Пользователь не найден')
 
-		// Удаляем хеш пароля перед отправкой на фронт
 		const { passwordHash, ...safeUser } = user
 		return safeUser
 	},
