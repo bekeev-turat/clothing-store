@@ -1,9 +1,13 @@
 import Image from 'next/image'
-import { type CatalogItem } from '@/domain/product/types'
+import { type TransformedProductCatalog } from '@/domain/product/types'
 import Link from 'next/link'
 import { ROUTE_MAP } from '@/shared/config/routes'
 
-export const ProductSearchCard = ({ item }: { item: CatalogItem }) => (
+export const ProductSearchCard = ({
+	item,
+}: {
+	item: TransformedProductCatalog
+}) => (
 	<div
 		className='group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl 
 		transition-all duration-300 hover:scale-110'

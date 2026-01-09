@@ -1,9 +1,18 @@
-export const dynamic = 'force-dynamic'
+'use client'
 
 import { useSearchLogic, useSearchItems } from '@/features/search/hooks/'
 import { SearchHeader, SearchResults } from '@/features/search/ui'
+import { Suspense } from 'react'
 
 export default function SearchPage() {
+	return (
+		<Suspense fallback={<div>загрузка страницы поиска...</div>}>
+			<SearchContent />
+		</Suspense>
+	)
+}
+
+function SearchContent() {
 	const { searchTerm, setSearchTerm, currentGender, updateGender } =
 		useSearchLogic()
 	const { results, isLoading } = useSearchItems()

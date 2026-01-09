@@ -3,7 +3,6 @@
 import { useDebounce, useUpdateParams } from '@/shared/hooks'
 import { useEffect, useState } from 'react'
 
-// 1. Выносим логику управления поиском в отдельный хук
 export function useSearchLogic() {
 	const { searchParams, updateParam } = useUpdateParams()
 	const [searchTerm, setSearchTerm] = useState(searchParams.get('q') ?? '')

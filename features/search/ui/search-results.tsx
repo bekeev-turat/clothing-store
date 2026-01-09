@@ -1,9 +1,9 @@
 import { ProductSearchCard } from '@/features/search/ui/product-search-card'
 import { EmptyState } from './empty-state'
-import { type CatalogItem } from '@/domain/product/types'
+import { type TransformedProductCatalog } from '@/domain/product/types'
 
 interface SearchResultsProps {
-	results?: CatalogItem[]
+	results?: TransformedProductCatalog[]
 	isLoading: boolean
 }
 

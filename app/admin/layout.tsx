@@ -1,4 +1,3 @@
-import prisma from '@/lib/prisma'
 import {
 	ADMIN_MENU,
 	AdminMenuItem,
@@ -10,7 +9,7 @@ import { AccountService } from '@/services/account.service'
 
 export const metadata: Metadata = {
 	title: {
-		template: '%s | Панель управления', // %s заменится на title из дочерней page.tsx
+		template: '%s | Панель управления', 
 		default: 'Админ-панель',
 	},
 }
