@@ -14,25 +14,16 @@ export const orderService = {
 
 		return prisma.$transaction(async (tx) => {
 			for (const item of data.items) {
-				try {
-					const stock = await stockRepository.findByVariantAndSize(
-						item.variantId,
-						item.size as ItemSize,
-						tx,
-					)
-
-					if (!stock || stock.quantity < item.quantity) {
-						throw new Error(
-							`Товара размера ${item.size} недостаточно в наличии`,
-						)
-					}
-
-					await stockRepository.updateQuantity(stock.id, -item.quantity, tx)
-				} catch (e) {
-					throw new Error(
-						`Ошибка при резервировании товара ${item.size}. Возможно, его уже купили.`,
-					)
+				const stock = await stockRepository.findByVariantAndSize(
+					item.variantId,
+					item.size as ItemSize,
+					tx,
+				)
+				if (!stock || stock.quantity < item.quantity) {
+					throw new Error(`Товара размера ${item.size}а недостаточно в наличии`)
 				}
+
+				await stockRepository.updateQuantity(stock.id, -item.quantity, tx)
 			}
 
 			return OrderRepository.create(
