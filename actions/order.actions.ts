@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { CreateOrderSchema } from '../features/order/ui/order.schema'
+import { CreateOrderSchema } from '../shared/lib/zod/order.schema'
 import { ROUTE_MAP } from '@/shared/config/routes'
 import { orderService } from '@/services/order.service'
 import { OrderStatus } from '@/prisma/generated/enums'
