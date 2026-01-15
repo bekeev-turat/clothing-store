@@ -1,4 +1,4 @@
-import { Search, SlidersHorizontal } from 'lucide-react'
+import { Search } from 'lucide-react'
 import {
 	Select,
 	SelectContent,
@@ -19,7 +19,7 @@ export const SearchForm = ({
 	isLoading,
 }: SearchFormProps) => (
 	<form action={onSearch} className='flex flex-col md:flex-row gap-3'>
-		<div className='relative flex-grow'>
+		<div className='relative grow'>
 			<input
 				name='query'
 				type='text'

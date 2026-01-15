@@ -2,12 +2,6 @@
 
 import { ErrorPageUI } from '@/shared/ui'
 
-export default function ErrorPage({
-	reset,
-	error,
-}: {
-	reset: () => void
-	error: Error & { digest?: string }
-}) {
+export default function ErrorPage({ reset }: { reset: () => void }) {
 	return <ErrorPageUI reset={reset} />
 }

@@ -14,7 +14,7 @@ export function UsersToolbar() {
 
 	useEffect(() => {
 		updateParam('query', debouncedSearch)
-	}, [debouncedSearch])
+	}, [debouncedSearch, updateParam])
 
 	return (
 		<div className='flex gap-4 items-center'>

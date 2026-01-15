@@ -1,10 +1,23 @@
 import { describe, expect, it, vi } from 'vitest'
 import prisma from '@/lib/prisma'
-import { stockRepository } from '@/repositories/stock.repository'
+import {
+	stockRepository,
+	type StockWithFields,
+} from '@/repositories/stock.repository'
 import { OrderRepository } from '@/repositories/order.repository'
 import { orderService } from '@/services/order.service'
+import { type IAddress } from '@/domain/order/types'
 
-// 1. Мокаем модули
+const USER_ADDRESS = {
+	firstName: 'ded',
+	lastName: 'dse',
+	address: 'jndsesac',
+	city: 'Бишкек',
+	zip: '720010',
+	phone: '+996997052000',
+	address2: null,
+} as IAddress
+
 vi.mock('@/lib/prisma', () => ({
 	default: {
 		$transaction: vi.fn(),
@@ -15,29 +28,26 @@ vi.mock('@/lib/prisma', () => ({
 vi.mock('@/repositories/stock.repository')
 vi.mock('@/repositories/order.repository')
 
-// 2. Создаем типизированные моки для тестов
 const mockedPrisma = vi.mocked(prisma)
 const mockedStockRepo = vi.mocked(stockRepository)
 const mockedOrderRepo = vi.mocked(OrderRepository)
 
 describe('orderService.createOrder', () => {
 	it('throws error if stock is insufficient', async () => {
-		// Мокаем транзакцию: просто вызываем callback, передавая в него объект
 		mockedPrisma.$transaction.mockImplementation(async (cb) => cb(prisma))
 
-		// Теперь TS не будет ругаться на объект, так как используется mockedStockRepo
 		mockedStockRepo.findByVariantAndSize.mockResolvedValue({
 			id: 's1',
 			variantId: 'v1',
 			size: 'M',
-			quantity: 0, // Недостаточно остатка
+			quantity: 0,
 		})
 
 		await expect(
 			orderService.createOrder({
 				userId: '1',
 				items: [{ variantId: 'v1', size: 'M', price: 100, quantity: 2 }],
-				address: {} as any,
+				address: USER_ADDRESS,
 			}),
 		).rejects.toThrow('недостаточно')
 	})
@@ -48,19 +58,32 @@ describe('orderService.createOrder', () => {
 		mockedStockRepo.findByVariantAndSize.mockResolvedValue({
 			id: 's1',
 			quantity: 10,
-		} as any)
+		} as StockWithFields)
 
-		// Исправляем ошибку "{ id: string }" -> "never"
 		mockedOrderRepo.create.mockResolvedValue({
 			id: 'order1',
 			userId: '1',
 			status: 'PENDING',
-		} as any)
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			items: [
+				{
+					id: '445',
+					price: 4110,
+					variantId: '852006',
+					size: 'L',
+					quantity: 2,
+					orderId: '550',
+				},
+			],
+			...USER_ADDRESS,
+			totalAmount: 200,
+		})
 
 		const order = await orderService.createOrder({
 			userId: '1',
 			items: [{ variantId: 'v1', size: 'M', price: 100, quantity: 2 }],
-			address: {} as any,
+			address: USER_ADDRESS,
 		})
 
 		expect(order.id).toBe('order1')

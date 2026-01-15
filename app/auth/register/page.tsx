@@ -31,8 +31,6 @@ export default function RegisterPage() {
 		},
 	})
 
-	const password = form.watch('password')
-
 	const onSubmit = async (data: TRegisterSchema) => {
 		const res = await registerAction(data)
 
@@ -118,7 +116,8 @@ export default function RegisterPage() {
 						name='confirmPassword'
 						rules={{
 							required: 'Повторите пароль',
-							validate: (val) => val === password || 'Пароли не совпадают',
+							validate: (val) =>
+								val === form.getValues('password') || 'Пароли не совпадают',
 						}}
 						render={({ field }) => (
 							<FormItem>

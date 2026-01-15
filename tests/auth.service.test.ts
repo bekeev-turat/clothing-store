@@ -2,12 +2,12 @@ import { describe, expect, it, vi, beforeEach } from 'vitest'
 import bcrypt from 'bcryptjs'
 import { AuthService } from '@/services/auth.service'
 import { AccountRepository } from '@/repositories/account.repository'
+import { Account } from '@/prisma/generated/client'
 
 vi.mock('@/repositories/account.repository')
 
 vi.mock('bcryptjs')
 
-// Типизируем моки
 const mockedRepo = vi.mocked(AccountRepository)
 const mockedBcrypt = vi.mocked(bcrypt)
 
@@ -18,8 +18,7 @@ describe('AuthService', () => {
 
 	describe('register', () => {
 		it('throws error if user already exists', async () => {
-			// В Vitest методы моков доступны напрямую
-			mockedRepo.findByEmail.mockResolvedValue({ email: '1' } as any)
+			mockedRepo.findByEmail.mockResolvedValue({ email: '1' } as Account)
 
 			await expect(
 				AuthService.register({
@@ -36,7 +35,7 @@ describe('AuthService', () => {
 			mockedRepo.create.mockResolvedValue({
 				id: '1',
 				email: 'test@mail.com',
-			} as any)
+			} as Account)
 
 			const result = await AuthService.register({
 				email: 'test@mail.com',
@@ -64,7 +63,7 @@ describe('AuthService', () => {
 
 		it('returns user if password is valid', async () => {
 			const user = { passwordHash: 'hash' }
-			mockedRepo.findByEmail.mockResolvedValue(user as any)
+			mockedRepo.findByEmail.mockResolvedValue(user as Account)
 			mockedBcrypt.compare.mockResolvedValue(true as never)
 
 			const result = await AuthService.validateUser('a@mail.com', '123')

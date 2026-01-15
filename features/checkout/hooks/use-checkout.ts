@@ -29,11 +29,11 @@ export const useCheckout = () => {
 	}
 
 	// 2. Вспомогательная логика валидации
-	const validateOrder = () => {
+	const validateOrder = useCallback(() => {
 		if (!session?.user?.id) throw new Error('Пожалуйста, войдите в систему')
 		if (!items.length) throw new Error('Корзина пуста')
 		if (!address) throw new Error('Укажите адрес доставки')
-	}
+	}, [address, items.length, session?.user?.id])
 
 	// 3. Основная функция (читается как рассказ)
 	const onPlaceOrder = useCallback(async () => {
@@ -87,7 +87,7 @@ export const useCheckout = () => {
 		} finally {
 			setIsPending(false)
 		}
-	}, [isPending, session, items, address, dispatch, router])
+	}, [isPending, session, items, address, dispatch, router, validateOrder])
 
 	return {
 		onPlaceOrder,

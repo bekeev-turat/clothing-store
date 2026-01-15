@@ -1,5 +1,5 @@
 import { CreateOrderInput } from '@/shared/lib/zod/order.schema'
-import { ItemSize, OrderStatus } from '@/prisma/generated/enums'
+import type { ItemSize, OrderStatus } from '@/prisma/generated/enums'
 import prisma from '@/lib/prisma'
 import { stockRepository } from '@/repositories/stock.repository'
 import { OrderRepository } from '@/repositories/order.repository'

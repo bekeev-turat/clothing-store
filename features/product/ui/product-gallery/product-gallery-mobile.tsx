@@ -11,8 +11,6 @@ interface Props {
 
 export function ProductGalleryMobile({ images, title, className }: Props) {
 	const [selectedIndex, setSelectedIndex] = useState(0)
-
-	// Оставляем только основной слайдер
 	const [mainRef, mainApi] = useEmblaCarousel({ loop: true })
 
 	const onSelect = useCallback(() => {
@@ -24,7 +22,6 @@ export function ProductGalleryMobile({ images, title, className }: Props) {
 		if (!mainApi) return
 		mainApi.on('select', onSelect)
 		mainApi.on('reInit', onSelect)
-		onSelect()
 
 		return () => {
 			mainApi.off('select', onSelect)
@@ -38,7 +35,6 @@ export function ProductGalleryMobile({ images, title, className }: Props) {
 
 	return (
 		<div className={clsx('w-full', className)}>
-			{/* Main Carousel */}
 			<div ref={mainRef} className='overflow-hidden'>
 				<div className='flex'>
 					{images.map((img, i) => (
@@ -56,7 +52,6 @@ export function ProductGalleryMobile({ images, title, className }: Props) {
 				</div>
 			</div>
 
-			{/* Dots Indicators */}
 			<div className='mt-3 flex justify-center gap-2'>
 				{images.map((_, i) => (
 					<button

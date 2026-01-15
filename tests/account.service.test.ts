@@ -3,13 +3,13 @@ import { AccountRepository } from '@/repositories/account.repository'
 import { UserRole } from '@/prisma/generated/enums'
 import { AccountService } from '@/services/account.service'
 import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
+import { Account } from '@/prisma/generated/client'
 
 vi.mock('@/repositories/account.repository')
 
 const mockedRepository = vi.mocked(AccountRepository)
 
 describe('AccountService', () => {
-	// Дефолтные параметры для тестов, чтобы избежать дублирования
 	const defaultParams = {
 		page: 1,
 		limit: 10,
@@ -21,7 +21,7 @@ describe('AccountService', () => {
 	it('throws error if non-admin tries to get users', async () => {
 		mockedRepository.findById.mockResolvedValue({
 			role: UserRole.MEMBER,
-		} as any)
+		} as Account)
 
 		await expect(
 			AccountService.getAllUsers('1', defaultParams),
@@ -31,7 +31,7 @@ describe('AccountService', () => {
 	it('returns users list for admin', async () => {
 		mockedRepository.findById.mockResolvedValue({
 			role: UserRole.ADMIN,
-		} as any)
+		} as Account)
 		mockedRepository.findAll.mockResolvedValue([])
 		mockedRepository.count.mockResolvedValue(0)
 
@@ -43,7 +43,7 @@ describe('AccountService', () => {
 	it('should call repository with raw filters and check admin access', async () => {
 		mockedRepository.findById.mockResolvedValue({
 			role: UserRole.ADMIN,
-		} as any)
+		} as Account)
 		mockedRepository.findAll.mockResolvedValue([])
 		mockedRepository.count.mockResolvedValue(0)
 
@@ -57,9 +57,7 @@ describe('AccountService', () => {
 
 		await AccountService.getAllUsers('admin-id', filters)
 
-		// 1. Проверяем авторизацию
 		expect(mockedRepository.findById).toHaveBeenCalledWith('admin-id')
-		// 2. Проверяем передачу данных
 		expect(mockedRepository.findAll).toHaveBeenCalledWith(filters)
 		expect(mockedRepository.count).toHaveBeenCalledWith(filters)
 	})

@@ -10,7 +10,7 @@ export function useSearchLogic() {
 
 	useEffect(() => {
 		updateParam('q', debouncedSearch)
-	}, [debouncedSearch])
+	}, [debouncedSearch, updateParam])
 
 	return {
 		searchTerm,

@@ -1,7 +1,6 @@
 import { getProductBySlugAction } from '@/actions/product-by-slug.action'
 import { VariantPage } from '@/features/product/ui/variant-page'
 import { LoadingPage } from '@/shared/ui/loading'
-import { Skeleton } from '@/shared/ui/skeleton'
 import { Metadata } from 'next'
 
 export async function generateMetadata({

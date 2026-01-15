@@ -23,3 +23,7 @@ export const stockRepository = {
 		})
 	},
 }
+
+export type StockWithFields = NonNullable<
+	Awaited<ReturnType<typeof stockRepository.findByVariantAndSize>>
+>

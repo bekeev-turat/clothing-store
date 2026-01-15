@@ -1,7 +1,7 @@
 import { Prisma } from '@/prisma/generated/client'
-import { UserRole } from '@/prisma/generated/enums'
+import type { UserRole } from '@/prisma/generated/enums'
 import { AccountRepository } from '@/repositories/account.repository'
-import { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
+import type { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
 import bcrypt from 'bcryptjs'
 import { redirect } from 'next/navigation'
 
@@ -10,7 +10,7 @@ export const AccountService = {
 		const user = await AccountRepository.findById(id)
 		if (!user) throw new Error('Пользователь не найден')
 
-		const { passwordHash, ...safeUser } = user
+		const { ...safeUser } = user
 		return safeUser
 	},
 

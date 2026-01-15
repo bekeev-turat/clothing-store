@@ -44,7 +44,7 @@ export const UserRow = ({ user }: UserRowProps) => {
 				} else {
 					toast.error(res?.error || 'Ошибка удаления')
 				}
-			} catch (error) {
+			} catch {
 				toast.error('Произошла непредвиденная ошибка')
 			}
 		})
@@ -59,7 +59,7 @@ export const UserRow = ({ user }: UserRowProps) => {
 				} else {
 					toast.error(res?.error || 'Ошибка обновления')
 				}
-			} catch (e) {
+			} catch {
 				toast.error('Ошибка соединения с сервером')
 			}
 		})
@@ -70,7 +70,7 @@ export const UserRow = ({ user }: UserRowProps) => {
 			<tr className='hover:bg-gray-50 transition border-b'>
 				<td className='px-6 py-4'>
 					<div className='flex items-center gap-3'>
-						<div className='relative w-8 h-8 flex-shrink-0'>
+						<div className='relative w-8 h-8 shrink-0'>
 							{user.avatar ? (
 								<Image
 									fill

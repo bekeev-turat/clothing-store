@@ -32,7 +32,6 @@ export function ProductGalleryDesktop({ images, title, className }: Props) {
 		if (!mainApi || !thumbsApi) return
 		mainApi.on('select', onSelect)
 		mainApi.on('reInit', onSelect)
-		onSelect() // синхронизируем при монтировании
 
 		return () => {
 			mainApi.off('select', onSelect)

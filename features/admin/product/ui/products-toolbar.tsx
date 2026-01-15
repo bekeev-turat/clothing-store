@@ -21,7 +21,7 @@ export function ProductsToolbar({ groups }: { groups: GroupWithCount[] }) {
 
 	useEffect(() => {
 		updateParam('query', debouncedSearch)
-	}, [debouncedSearch])
+	}, [debouncedSearch, updateParam])
 
 	const formattedOptions = useMemo(() => {
 		const result: (FilterOption | FilterGroup)[] = [

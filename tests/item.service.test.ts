@@ -1,3 +1,4 @@
+import { TransformedProductCatalog } from '@/domain/product/types'
 import { itemRepository } from '@/repositories/item.repository'
 import { itemService } from '@/services/item.service'
 import { CatalogParams } from '@/shared/lib/zod/catalog.schema'
@@ -16,13 +17,13 @@ describe('itemService.search', () => {
 		mockedRepo.findManyForCatalog.mockResolvedValue([
 			{ id: '1' },
 			{ id: '2' },
-		] as any)
+		] as TransformedProductCatalog[])
 		mockedRepo.countForCatalog.mockResolvedValue(10)
 
 		const result = await itemService.search({
 			pageIndex: 1,
 			pageSize: 2,
-		} as any)
+		} as CatalogParams)
 
 		expect(result.data.length).toBe(2)
 		expect(result.meta.totalItems).toBe(10)
@@ -37,7 +38,7 @@ describe('itemService.search', () => {
 		const result = await itemService.search({
 			pageIndex: 1,
 			pageSize: 10,
-		} as any)
+		} as CatalogParams)
 
 		expect(result.data).toEqual([])
 		expect(result.meta.totalPages).toBe(0)
@@ -50,9 +51,8 @@ describe('itemService.search', () => {
 
 		await itemService.search(filters)
 
-		// Проверяем, что в репозиторий ушли правильные skip/take
 		expect(mockedRepo.findManyForCatalog).toHaveBeenCalledWith({
-			skip: 5, // (2-1) * 5
+			skip: 5,
 			take: 5,
 			filters: filters,
 		})

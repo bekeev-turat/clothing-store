@@ -71,7 +71,7 @@ export async function getOrderByIdAction(id: string) {
 	try {
 		const order = await orderService.getOrderById(id)
 		return { success: true, data: order }
-	} catch (e) {
+	} catch {
 		return { success: false, message: 'Заказ не найден' }
 	}
 }
@@ -91,7 +91,7 @@ export async function updateOrderStatusAction(
 		revalidatePath(ROUTE_MAP.orders.detail(orderId))
 
 		return { success: true, message: 'Статус обновлен' }
-	} catch (e) {
+	} catch {
 		return { success: false, message: 'Ошибка при обновлении статуса' }
 	}
 }
