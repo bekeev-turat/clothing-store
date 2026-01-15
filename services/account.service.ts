@@ -1,5 +1,5 @@
 import { Prisma } from '@/prisma/generated/client'
-import type { UserRole } from '@/prisma/generated/enums'
+import { UserRole } from '@/prisma/generated/enums'
 import { AccountRepository } from '@/repositories/account.repository'
 import type { TUserFiltersSchema } from '@/shared/lib/zod/account.schema'
 import bcrypt from 'bcryptjs'
