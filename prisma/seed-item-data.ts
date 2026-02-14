@@ -532,3 +532,600 @@ export const itemsFemaleData = [
 		],
 	},
 ]
+
+export const itemsMaleData = [
+	{
+		name: 'Diesel хлопковая футболка',
+		description: 'Футболка из органического хлопка премиум-класса от Diesel.',
+		brand: 'Diesel',
+		slug: 'diesel-a11302-0hgam',
+		price: 18450,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '6289159',
+		modelHeight: 188,
+		modelSize: 'L',
+		measurements:
+			'Обхват груди 122 см, длина рукава от горловины 45 см, длина изделия по спинке 73 см.',
+
+		groupSlug: 'futbolki-male',
+
+		variants: [
+			{
+				color: 'Черный',
+				availableSizes: ['XS', 'S', 'M', 'L', 'XL'],
+				stock: [
+					{ size: 'XS', quantity: 5 },
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/Мужская_черная_хлопковая_футболка_DIESEL .jpg',
+					'/imgs/Мужская_черная_хлопковая_футболка_DIESEL_1 .jpg',
+					'/imgs/Мужская_черная_хлопковая_футболка_DIESEL_3 .jpg',
+					'/imgs/Мужская_черная_хлопковая_футболка_DIESEL_4 .jpg',
+					'/imgs/Мужская_черная_хлопковая_футболка_DIESEL_5 .jpg',
+				],
+			},
+			{
+				color: 'Белый',
+				availableSizes: ['S', 'M', 'L'],
+				stock: [
+					{ size: 'XS', quantity: 5 },
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/Мужская_белая_хлопковая_футболка_DIESEL .jpg',
+					'/imgs/Мужская_белая_хлопковая_футболка_DIESEL_1 .jpg',
+					'/imgs/Мужская_белая_хлопковая_футболка_DIESEL_2 .jpg',
+					'/imgs/Мужская_белая_хлопковая_футболка_DIESEL_3 .jpg',
+					'/imgs/Мужская_белая_хлопковая_футболка_DIESEL_5 .jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Хлопковый свитшот Sporty & Rich x UCLA',
+		description:
+			'Хлопковый свитшот из коллаборации с Калифорнийским университетом украсили принтом UCLA спереди и логотипом Sporty & Rich сзади. Пояс, манжеты и горловину выполнили из трикотажа в рубчик.',
+		brand: 'Sporty&Rich',
+		slug: 'sporty&rich-st075-7bli16',
+		price: 25400,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7048276',
+		modelHeight: 188,
+		modelSize: 'L',
+		measurements:
+			'Обхват груди 114 см, длина рукава от горловины 85 см, длина изделия по спинке 68 см. На мужской модели: размер L. Рост: 188 см. Параметры изделия для размера L: Обхват груди 132 см, длина рукава от горловины 85 см, длина изделия по спинке 72 см.',
+		groupSlug: 'sweatshirt-male',
+
+		variants: [
+			{
+				color: 'Голубой',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovyi-svitshot-sporty-rich-x-ucla-sporty-and-rich-goluboi-0.jpg',
+					'/imgs/khlopkovyi-svitshot-sporty-rich-x-ucla-sporty-and-rich-goluboi-1.jpg',
+					'/imgs/khlopkovyi-svitshot-sporty-rich-x-ucla-sporty-and-rich-goluboi-3.jpg',
+					'/imgs/khlopkovyi-svitshot-sporty-rich-x-ucla-sporty-and-rich-goluboi-4.jpg',
+					'/imgs/khlopkovyi-svitshot-sporty-rich-x-ucla-sporty-and-rich-goluboi-5.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Хлопковые шорты Sporty & Rich x UCLA',
+		description:
+			'Шорты с эластичным поясом, задним и боковыми карманами сшили из хлопкового трикотажа плотностью 9 унций. Окрашенную в готовом виде модель декорировали логотипом и монограммой UCLA.',
+		brand: 'Sporty&Rich',
+		slug: 'sporty&rich-sh0396-6bld16',
+		price: 17400,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7048275',
+		modelHeight: 188,
+		modelSize: 'L',
+		measurements: 'Обхват талии 80 см, длина изделия (по боковому шву) 46 см.',
+		groupSlug: 'shorts-male',
+
+		variants: [
+			{
+				color: 'Голубой',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-shorty-sporty-rich-x-ucla-sporty-and-rich-goluboi-0.jpg',
+					'/imgs/khlopkovye-shorty-sporty-rich-x-ucla-sporty-and-rich-goluboi-1.jpg',
+					'/imgs/khlopkovye-shorty-sporty-rich-x-ucla-sporty-and-rich-goluboi-3.jpg',
+					'/imgs/khlopkovye-shorty-sporty-rich-x-ucla-sporty-and-rich-goluboi-4.jpg',
+					'/imgs/khlopkovye-shorty-sporty-rich-x-ucla-sporty-and-rich-goluboi-5.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'HUGO Blue Хлопковые шорты',
+		description:
+			'Для пошива шортов длиной чуть выше колена использовали хлопковый трикотаж. Модель с поясом-кулиской, боковыми и накладным задним карманами декорировали крупным принтом в спортивном стиле.',
+		brand: 'HUGO Blue',
+		slug: 'hugoblue-054dse-419d8',
+		price: 12500,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7048782',
+		modelHeight: 188,
+		modelSize: 'M',
+		measurements: 'Обхват талии 84 см, длина изделия (по боковому шву) 51 см.',
+		groupSlug: 'shorts-male',
+
+		variants: [
+			{
+				color: 'Голубой',
+				availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'XS', quantity: 10 },
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 0 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-shorty-hugo-blue-goluboi-0.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-goluboi-1.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-goluboi-3.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-goluboi-4.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-goluboi-5.jpg',
+				],
+			},
+			{
+				color: 'Черный',
+				availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'XS', quantity: 10 },
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-shorty-hugo-blue-chernyi-0.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-chernyi-1.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-chernyi-3.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-chernyi-4.jpg',
+					'/imgs/khlopkovye-shorty-hugo-blue-chernyi-5.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Moschino Хлопковые джоггеры',
+		description:
+			'Для пошива шортов длиной чуть выше колена использовали хлопковый трикотаж. Модель с поясом-кулиской, боковыми и накладным задним карманами декорировали крупным принтом в спортивном стиле.',
+		brand: 'Moschino',
+		slug: 'moschino-054dse-49d8',
+		price: 53900,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7090134',
+		modelHeight: 186,
+		modelSize: 'M',
+		measurements:
+			'Обхват талии 97 см, длина внутреннего шагового шва 80 см, длина по внешнему шву 110 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Черный',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 0 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Moschino Джинсы',
+		description: '',
+		brand: 'Moschino',
+		slug: 'moschino-ad348-02d3',
+		price: 55700,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7090131',
+		modelHeight: 186,
+		modelSize: 'M',
+		measurements:
+			'Обхват талии 97 см, длина внутреннего шагового шва 80 см, длина по внешнему шву 110 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Темно-синий',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/dzhinsy-moschino-temno-sinii-0.jpg',
+					'/imgs/dzhinsy-moschino-temno-sinii-1.jpg',
+					'/imgs/dzhinsy-moschino-temno-sinii-2.jpg',
+					'/imgs/dzhinsy-moschino-temno-sinii-3.jpg',
+					'/imgs/dzhinsy-moschino-temno-sinii-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Moschino Хлопковые джоггеры',
+		description:
+			'Джоггеры свободного кроя сшили из хлопкового поплина. Брюки с высокой посадкой и защипами дополнили двумя врезными карманами по бокам и парой с листочками сзади.',
+		brand: 'Moschino',
+		slug: 'moschino-addse-02d3',
+		price: 107000,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7086471',
+		modelHeight: 186,
+		modelSize: 'XL',
+		measurements:
+			'Обхват талии 109 см, длина внутреннего шагового шва 67,5 см, длина по внешнему шву 108 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Черный',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-moschino-chernyi-1-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Parajumpers Хлопковые джоггеры',
+		description:
+			'Джоггеры свободного кроя сшили из хлопкового поплина. Брюки с высокой посадкой и защипами дополнили двумя врезными карманами по бокам и парой с листочками сзади.',
+		brand: 'Parajumpers',
+		slug: 'parajumpers-khlopkovye-dzhoggery-24000',
+		price: 24000,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 85%', 'Полиэстер: 15%'],
+		code: '7091630',
+		modelHeight: 186,
+		modelSize: 'L',
+		measurements:
+			'Обхват талии 92 см, длина внутреннего шагового шва 75 см, длина по внешнему шву 104 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Черный',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-parajumpers-chernyi-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-chernyi-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-chernyi-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-chernyi-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-chernyi-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Parajumpers Хлопковые джоггеры',
+		description:
+			'В коллекцию Super Easy Fleece вошли джоггеры Makalu из хлопкового флиса с добавлением полиэстера. Модель кроя Regular fit дополнили тремя карманами, украсив левый боковой фирменным патчем. Концы шнура, пропущенного через эластичный пояс-кулиску, подчеркнули контрастной строчкой.',
+		brand: 'Parajumpers',
+		slug: 'parajumpers-25wmpm-paey23',
+		price: 24000,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 91%', 'Полиэстер: 9%'],
+		code: '7071289',
+		modelHeight: 186,
+		modelSize: 'L',
+		measurements:
+			'Обхват талии 92 см, длина внутреннего шагового шва 75 см, длина по внешнему шву 104 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Темно-серый',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-4.jpg',
+				],
+			},
+			{
+				color: 'Темно-синий',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Parajumpers Хлопковая толстовка',
+		description: '',
+		brand: 'Parajumpers',
+		slug: 'parajumpers-26sm-pffle-t24',
+		price: 36200,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 85%', 'Полиэстер: 15%'],
+		code: '7091629',
+		modelHeight: 186,
+		modelSize: 'L',
+		measurements:
+			'Обхват груди 122 см, длина рукава от плечевого шва 68 см, длина изделия по спинке 68 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Черный',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovaya-tolstovka-parajumpers-chernyi-0.jpg',
+					'/imgs/khlopkovaya-tolstovka-parajumpers-chernyi-1.jpg',
+					'/imgs/khlopkovaya-tolstovka-parajumpers-chernyi-2.jpg',
+					'/imgs/khlopkovaya-tolstovka-parajumpers-chernyi-3.jpg',
+					'/imgs/khlopkovaya-tolstovka-parajumpers-chernyi-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Parajumpers Хлопковые джоггеры',
+		description:
+			'В коллекцию Super Easy Fleece вошли джоггеры Makalu из хлопкового флиса с добавлением полиэстера. Модель кроя Regular fit дополнили тремя карманами, украсив левый боковой фирменным патчем. Концы шнура, пропущенного через эластичный пояс-кулиску, подчеркнули контрастной строчкой.',
+		brand: 'Parajumpers',
+		slug: 'parajumpers-25wmpm-paey23',
+		price: 24000,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 91%', 'Полиэстер: 9%'],
+		code: '7071289',
+		modelHeight: 186,
+		modelSize: 'L',
+		measurements:
+			'Обхват талии 92 см, длина внутреннего шагового шва 75 см, длина по внешнему шву 104 см.',
+		groupSlug: 'pants-male',
+
+		variants: [
+			{
+				color: 'Темно-серый',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-seryi-4.jpg',
+				],
+			},
+			{
+				color: 'Темно-синий',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-0.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-1.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-2.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-3.jpg',
+					'/imgs/khlopkovye-dzhoggery-parajumpers-temno-sinii-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'C.P. Company Хлопковая рубашка',
+		description:
+			'Для пошива рубашки оттенка Elmwood Green использовали габардин из органического хлопка. Окрашенную в готовом виде модель дополнили тремя карманами, один из которых разместили на левом рукаве и декорировали фирменной линзой.',
+		brand: 'C.P. Company',
+		slug: 'company-19cmsa-0143g',
+		price: 37850,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7053588',
+		modelHeight: 186,
+		modelSize: 'M',
+		measurements:
+			'Обхват груди 112 см, длина рукава от плечевого шва 65 см, длина изделия по спинке 75 см.',
+		groupSlug: 'rubashka-male',
+
+		variants: [
+			{
+				color: 'Хаки',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/khlopkovaya-rubashka-c-p-company-khaki-0.jpg',
+					'/imgs/khlopkovaya-rubashka-c-p-company-khaki-1.jpg',
+					'/imgs/khlopkovaya-rubashka-c-p-company-khaki-2.jpg',
+					'/imgs/khlopkovaya-rubashka-c-p-company-khaki-3.jpg',
+					'/imgs/khlopkovaya-rubashka-c-p-company-khaki-4.jpg',
+				],
+			},
+		],
+	},
+	{
+		name: 'Jacob Cohen Джинсовая рубашка',
+		description:
+			'Рубашка из хлопкового денима органично завершит непринужденный повседневный образ. Модель на брендированных пуговицах дополнили накладным нагрудным карманом. На левой полочке вышили небольшую фирменную эмблему в тон.',
+		brand: 'Jacob Cohen',
+		slug: 'jacob-cohen-19cmsa-0143g',
+		price: 48850,
+		gender: 'male',
+		tags: ['organic cotton', 'premium'],
+
+		composition: ['Хлопок: 100%'],
+		code: '7073992',
+		modelHeight: 186,
+		modelSize: 'M',
+		measurements:
+			'Обхват груди 120 см, длина рукава от плечевого шва 65 см, длина изделия по спинке 75 см.',
+		groupSlug: 'rubashka-male',
+
+		variants: [
+			{
+				color: 'Темно-синий',
+				availableSizes: ['S', 'M', 'L', 'XL', 'XXL'],
+				stock: [
+					{ size: 'S', quantity: 10 },
+					{ size: 'M', quantity: 8 },
+					{ size: 'L', quantity: 6 },
+					{ size: 'XL', quantity: 0 },
+					{ size: 'XXL', quantity: 4 },
+				],
+
+				images: [
+					'/imgs/dzhinsovaya-rubashka-jacob-cohen-temno-sinii-1.jpg',
+					'/imgs/dzhinsovaya-rubashka-jacob-cohen-temno-sinii-2.jpg',
+					'/imgs/dzhinsovaya-rubashka-jacob-cohen-temno-sinii-3.jpg',
+					'/imgs/dzhinsovaya-rubashka-jacob-cohen-temno-sinii-4.jpg',
+					'/imgs/dzhinsovaya-rubashka-jacob-cohen-temno-sinii-5.jpg',
+				],
+			},
+		],
+	},
+]

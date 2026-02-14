@@ -4,7 +4,7 @@ export const groupsData: { title: string; slug: string; gender: ItemGender }[] =
 	[
 		// -------- MEN --------
 		{
-			title: 'Футболки мужские',
+			title: 'Футболки',
 			slug: 'futbolki-male',
 			gender: 'male' as ItemGender,
 		},
@@ -16,43 +16,48 @@ export const groupsData: { title: string; slug: string; gender: ItemGender }[] =
 			gender: 'male' as ItemGender,
 		},
 		{
-			title: 'Мужские шорты',
+			title: 'Шорты',
 			slug: 'shorts-male',
 			gender: 'male' as ItemGender,
 		},
 		{
-			title: 'Мужские толстовки',
+			title: 'Рубашки',
+			slug: 'rubashka-male',
+			gender: 'male' as ItemGender,
+		},
+		{
+			title: 'Толстовки',
 			slug: 'sweatshirt-male',
 			gender: 'male' as ItemGender,
 		},
 
 		// -------- WOMEN --------
 		{
-			title: 'Футболки женские',
+			title: 'Футболки',
 			slug: 'futbolki-female',
 			gender: 'female' as ItemGender,
 		},
 		{ title: 'Худи', slug: 'hoodie-female', gender: 'female' as ItemGender },
 		{ title: 'Платья', slug: 'dresses-female', gender: 'female' as ItemGender },
 		{
-			title: 'Женские брюки',
+			title: 'Брюки',
 			slug: 'trousers-female',
 			gender: 'female' as ItemGender,
 		},
 		{
-			title: 'Женские толстовки',
+			title: 'Толстовки',
 			slug: 'sweatshirt-female',
 			gender: 'female' as ItemGender,
 		},
 		{
-			title: 'Женские шорты',
+			title: 'Шорты',
 			slug: 'shorts-female',
 			gender: 'female' as ItemGender,
 		},
 
 		// -------- KIDS --------
 		{
-			title: 'Футболки детские',
+			title: 'Футболки',
 			slug: 'futbolki-child',
 			gender: 'child' as ItemGender,
 		},

@@ -1,7 +1,7 @@
 import { ItemSize, PrismaClient } from './generated/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { ItemGender } from './generated/client'
-import { itemsFemaleData } from './seed-item-data'
+import { itemsFemaleData, itemsMaleData } from './seed-item-data'
 import { groups, groupsData } from './seed-group-data'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
@@ -27,7 +27,8 @@ async function main() {
 	// 2) Items
 	// ------------------------------
 	console.log('🌱 Seeding items...')
-	for (const item of itemsFemaleData) {
+	const itemsData = [...itemsFemaleData, ...itemsMaleData]
+	for (const item of itemsData) {
 		const { variants, groupSlug, ...itemBase } = item
 
 		const group = groups[groupSlug]
